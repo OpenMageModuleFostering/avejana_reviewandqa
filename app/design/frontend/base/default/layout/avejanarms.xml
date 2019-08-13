@@ -5,20 +5,21 @@
       <action method="setTemplate"><template>page/1column.phtml</template></action>   
     </reference>   
     <reference name="content">   
-      <block type="avejanarms/index" name="avejanarms_index" template="avejanarms/review.phtml"/>   
+      <block type="avejanarms/index" name="avejanarms_index" template="avejanarms/review.phtml"/>  
+		
     </reference>   
   </avejanarms_index_index>
 	
 	<catalog_product_view>
 		<reference name="head">
-		   <action method="addItem"><type>skin_css</type><name>css/avejana/avejana.css</name><params/></action>
-			<action method="addItem"><type>skin_css</type><name>css/avejana/reviewandqa.css</name><params/></action>
+		   <action ifconfig="avejanasetting/avejanaconfiguration/active" method="addItem"><type>skin_css</type><name>css/avejana/avejana.css</name><params/></action>
+		   <action ifconfig="avejanasetting/avejanaconfiguration/active" method="addItem"><type>skin_css</type><name>css/avejana/reviewandqa.css</name><params/></action>
 		</reference>
 		<reference name="alert.urls">
 			<block type="avejanarms/helper" name="avejana.summary" as="avajanasummary" template="avejanarms/rating.phtml" before="product.info.media"/>
 		</reference>
         <reference name="product.info">
-			
+			<block type="avejanarms/index" name="avejanarmsgen_index" template="avejanarms/generatedreview.phtml"/>  
 			<block type="avejanarms/index" name="avejana.reviews" as="avajanareview" template="avejanarms/review.phtml" after="additional">
                 <action method="addToParentGroup" ifconfig="avejanasetting/avejanaconfiguration/active"><group>detailed_info</group></action>
                 <action method="setTitle" ifconfig="avejanasetting/avejanaconfiguration/active" translate="value"><value>Reviews</value></action>

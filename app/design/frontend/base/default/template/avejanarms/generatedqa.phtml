@@ -1,0 +1,64 @@
+<?php 
+	$avejanaQAlist 		=  $this->getAvejanaQuestionAnswerListing(Mage::getSingleton('core/session')->getProID());
+	if(count($avejanaQAlist)>0){
+		$i=0; foreach($avejanaQAlist as $_qa){
+			if($_qa->Answer != ''){ 
+				$i=$i+1;
+				$qafirst_letter = substr($_qa->UserName, 0 , 1);
+		?>	
+				<div class="qafields avejana-review-feld">
+					<div class="avejana-initial" >
+						<a href="javascript:void(0)">
+							<span class="first-letter"><?php echo ucfirst($qafirst_letter); ?></span>
+						</a>
+					</div>
+					<div class="avejana-feed"><div class="avejana-initial2" >
+						<strong><a href="javascript:void(0)" class="text-muted"><?php echo $_qa->UserName; ?></a></strong>&nbsp;<small class="text-muted"><?php echo $this->formatDate($_qa->QuestionDate);?></small>
+						
+						<div class="reviewtitle" >
+							<a href="javascript:void(0)"><?php echo $this->htmlEscape($_qa->Question);?></a>
+						</div>
+						
+						
+						<div class="avejana-responce">
+							<p class="avejana-header">
+								<i class="fa fa-comment"></i>&nbsp;<span><?php echo $_qa->AnsweredBy; ?></span> 
+								Response :
+							</p>
+							<div class="response">
+								<p class="detail"><?php echo $_qa->Answer; ?></p>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div style="clear:both"></div>
+				<div class="hrline"><hr></div>
+		  </div>
+		<?php }
+		} 
+		if($i>0){?>
+		<script>
+			
+			jQuery(document).ready(function(){
+				jQuery(".toggle-tabs li").each(function(index) {
+					 if(jQuery(this).find("span").text() == "Q&A"){
+						 jQuery(this).find("span").html("Q&A "+" (<?php echo $i;?>)");
+					 }
+				});
+				
+				jQuery(".product-tabs li").each(function(index) {
+					 if(jQuery(this).find("a").text() == "Q&A"){
+						 jQuery(this).find("a").html("Q&A "+" (<?php echo $i;?>)");
+					 }
+				});
+				
+				jQuery(".avejana-tab-links li").each(function(index) {
+					 if(jQuery(this).find("span").text() == "Q&A"){
+						 jQuery(this).find("span").html("Q&A "+" (<?php echo $i;?>)");
+					 }
+				});
+			})
+		</script>
+		<?php }
+	} ?>

@@ -163,6 +163,19 @@ class Avejana_AvejanaRMS_QaController extends Mage_Core_Controller_Front_Action{
 
 	}
 	
+	
+	/************LOad QA after page loads***********/
+	public function qaloadAction(){
+
+		try{
+			$productid	=	$this->getRequest()->getPost('productid');//die('kk');
+			Mage::getSingleton('core/session')->setProID($productid);
+			echo $this->getLayout()->createBlock('avejanarms/index')->setTemplate('avejanarms/generatedqa.phtml')->toHtml();
+		}catch(Exception $e){
+			print_r($e);
+		}
+	}
+	
 	public function callPUTCurl($url, $data, $header_arr){
         
 		try{

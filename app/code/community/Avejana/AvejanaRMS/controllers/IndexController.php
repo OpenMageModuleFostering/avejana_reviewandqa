@@ -285,70 +285,8 @@ class Avejana_AvejanaRMS_IndexController extends Mage_Core_Controller_Front_Acti
 
 		try{
 			$productid	=	$this->getRequest()->getPost('productid');//die('kk');
-			$url = Mage::helper('avejanarms')->getCompanyUrl().'/api/reviewreply/';	
-			$store_id = Mage::app()->getStore()->getStoreId();
-			$action = Mage::getModel('catalog/resource_product_action');
-			$returnarr =array();
-
-			$data = array(
-
-				'CompanyID' => Mage::helper('avejanarms')->getCompanyId(),
-
-				'ProductID' => $productid
-
-			);
-
-			$header_arr = array(
-
-				"rest-ajevana-key: ".Mage::helper('avejanarms')->getApiKey()."",
-
-				"user-id: ".Mage::helper('avejanarms')->getUserId().""
-
-			); 
-
-			$final_url = $url . "?" . http_build_query($data);
-
-
-
-			$ajax_response = $this->callGETCurl($final_url, $data, $header_arr);
-
-
-			$response = json_decode($ajax_response);
-			//print_r($ajax_response);exit;
-			if($response){
-				$status = $response->status;
-
-				if($response->status=='success'){
-					
-					$totalratings=0;
-					foreach($response->message as $reviews){
-						$totalratings=$totalratings+$reviews->Ratings;
-					}
-					//$product					=	Mage::getModel('catalog/product')->load($productid);
-					$totalreviewcount			=	count($response->message);
-					$averagerating				=	($totalratings/$totalreviewcount)*20;
-					
-					$action->updateAttributes(array($productid), array(
-						'avejana_averagerating' => $averagerating
-					), $store_id);
-					
-					$action->updateAttributes(array($productid), array(
-						'avejana_totalreview' => $totalreviewcount
-					), $store_id);
-					
-					echo $this->getLayout()->createBlock('avejanarms/index')->setTemplate('avejanarms/generatedreview.phtml')->toHtml();
-				}else{
-					$action->updateAttributes(array($productid), array(
-						'avejana_averagerating' => 0
-					), $store_id);
-					
-					$action->updateAttributes(array($productid), array(
-						'avejana_totalreview' => 0
-					), $store_id);
-					$returnarr = array(); 
-				}
-				die;
-			}
+			Mage::getSingleton('core/session')->setProID($productid);
+			echo $this->getLayout()->createBlock('avejanarms/index')->setTemplate('avejanarms/generatedreview.phtml')->toHtml();
 		}catch(Exception $e){
 			print_r($e);
 		}
@@ -379,5 +317,6 @@ class Avejana_AvejanaRMS_IndexController extends Mage_Core_Controller_Front_Acti
 		return $response;
 
 	}
-
+	
+	
 }
