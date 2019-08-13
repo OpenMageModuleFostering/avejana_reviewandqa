@@ -1,0 +1,64 @@
+<script type="text/javascript">
+    if (typeof jQuery == "undefined"){
+        document.write(unescape("%3Cscript src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+</script>
+
+<script type="text/javascript">
+	jQuery.noConflict();
+	jQuery(document).ready(function(){
+		jQuery(".update_normal_products").on("click",function(e) {
+
+			jQuery('#loading-mask').css({	'width':jQuery(window).width(),
+											'height':jQuery(window).width(),
+											'top':0,
+											'left':0,
+											'display':'block'
+										});
+			
+			jQuery.ajax({
+				url 	: 	"<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/reviewandqa_orderfldmap/getAllUpdateIds')?>",
+				type 	: 	"GET",
+				dataType: 	"json",
+				success : 	function(update_ids){
+					var total_count = update_ids.length;
+					if(total_count==0){	
+						location.reload();
+					}else{
+						var total_sync = 1;
+						var tot_success = 0;
+						jQuery('#loading_mask_loader').append(jQuery('<div/>').addClass('count').text('0/'+update_ids.length));
+						update_ids.each(function(map_id){
+							counter = jQuery('#loading_mask_loader').find('.count').text().split('/')[0];
+							total_sync = parseInt(counter)+1;
+							jQuery.ajax({
+								url 	: 	"<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/reviewandqa_orderfldmap/updateProduct')?>",
+								type 	: 	"GET",
+								dataType: 	"json",
+								async 	: false,
+								data 	: 	{
+												id: map_id,	
+												total: total_count,
+												counter : total_sync
+											},
+								success : 	function(data){
+									if (data['response']){
+										tot_success = tot_success + 1;
+									}
+									next = parseInt(counter)+1;
+
+									jQuery('#loading_mask_loader').find('.count').text(next+'/'+total_count)
+
+									if(total_sync == total_count){
+										jQuery("#loading-mask").hide();
+										location.reload();
+									}
+								}
+							});
+						});
+					}
+				}
+			});
+		});
+	});
+</script>

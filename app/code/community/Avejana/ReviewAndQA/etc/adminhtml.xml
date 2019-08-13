@@ -1,95 +1,95 @@
-<?xml version="1.0" ?>
-<config>
-	
-	<menu>
-		<catalog>
-			<children>
-				<reviewandqa translate="title" module="reviewandqa">
-					<title>Product Q and A</title>
-					<action>adminhtml/questions</action>
-					<sort_order>120</sort_order>
-				</reviewandqa>
-			</children>
-		</catalog>
-		<avejanatab translate="title" module="reviewandqa">
-			<title>Avejana Reviews</title>
-			<sort_order>100</sort_order>
-			<children>
-				<fields_mapppings translate="title" module="reviewandqa">
-					<title>Fields Mappigs</title>
-					<sort_order>1</sort_order>
-					<children>
-						<order translate="title" module="reviewandqa">
-							<title>Order</title>
-							<sort_order>1</sort_order>
-							<action>adminhtml/orderfldmap</action>
-						</order>
-					</children>
-				</fields_mapppings>
-				<apis_configuration translate="title" module="reviewandqa">
-					<title>API Configuration</title>
-					<sort_order>3</sort_order>
-					<action>adminhtml/system_config/edit/section/apiconfig</action>
-				</apis_configuration>
-			</children>
-		</avejanatab>
-	</menu>
-	
-	<acl>
-		<resources>
-			<all>
-				<title>
-					Allow Everything
-				</title>
-			</all>
-			<admin>
-				<children>
-					<catalog>
-						<children>
-							<reviewandqa translate="title" module="reviewandqa">
-								<title>Product Q and A</title>
-							</reviewandqa>
-						</children>
-					</catalog>
-					<avejanatab>
-						<children>
-							<fields_mapppings>
-								<children>
-									<order translate="title" module="reviewandqa">
-										<title>Order</title>
-									</order>
-								</children>
-							</fields_mapppings>
-							<apis_configuration translate="title" module="reviewandqa">
-								<title>API Configuration</title>
-							</apis_configuration>
-						</children>
-					</avejanatab>
-					<system>
-						<children>
-							<config>
-								<children>
-									<reviewssection translate="title" module="reviewandqa">
-										<title>Product Reviews Settings</title>
-									</reviewssection>
-									<questionssection translate="title" module="reviewandqa">
-										<title>Product Q&amp;A Settings</title>
-									</questionssection>
-									<apiconfig translate="title" module="reviewandqa">
-										<title>API Configuration</title>
-									</apiconfig>
-									<tabssection translate="title" module="reviewandqa">
-										<title>Tabs Settings</title>
-									</tabssection>
-									<richsnippets translate="title" module="reviewandqa">
-										<title>Rich Snippets</title>
-									</richsnippets>
-								</children>
-							</config>
-						</children>
-					</system>
-				</children>
-			</admin>
-		</resources>
-	</acl>
+<?xml version="1.0" ?>
+<config>
+	
+	<menu>
+		<catalog>
+			<children>
+				<reviewandqa translate="title" module="reviewandqa">
+					<title>Product Q and A</title>
+					<action>adminhtml/questions</action>
+					<sort_order>120</sort_order>
+				</reviewandqa>
+			</children>
+		</catalog>
+		<avejanatab translate="title" module="reviewandqa">
+			<title>Avejana Reviews</title>
+			<sort_order>100</sort_order>
+			<children>
+				<fields_mapppings translate="title" module="reviewandqa">
+					<title>Fields Mappigs</title>
+					<sort_order>1</sort_order>
+					<children>
+						<order translate="title" module="reviewandqa">
+							<title>Order</title>
+							<sort_order>1</sort_order>
+							<action>adminhtml/orderfldmap</action>
+						</order>
+					</children>
+				</fields_mapppings>
+				<apis_configuration translate="title" module="reviewandqa">
+					<title>API Configuration</title>
+					<sort_order>3</sort_order>
+					<action>adminhtml/system_config/edit/section/apiconfig</action>
+				</apis_configuration>
+			</children>
+		</avejanatab>
+	</menu>
+	
+	<acl>
+		<resources>
+			<all>
+				<title>
+					Allow Everything
+				</title>
+			</all>
+			<admin>
+				<children>
+					<catalog>
+						<children>
+							<reviewandqa translate="title" module="reviewandqa">
+								<title>Product Q and A</title>
+							</reviewandqa>
+						</children>
+					</catalog>
+					<avejanatab>
+						<children>
+							<fields_mapppings>
+								<children>
+									<order translate="title" module="reviewandqa">
+										<title>Order</title>
+									</order>
+								</children>
+							</fields_mapppings>
+							<apis_configuration translate="title" module="reviewandqa">
+								<title>API Configuration</title>
+							</apis_configuration>
+						</children>
+					</avejanatab>
+					<system>
+						<children>
+							<config>
+								<children>
+									<reviewssection translate="title" module="reviewandqa">
+										<title>Product Reviews Settings</title>
+									</reviewssection>
+									<questionssection translate="title" module="reviewandqa">
+										<title>Product Q&amp;A Settings</title>
+									</questionssection>
+									<apiconfig translate="title" module="reviewandqa">
+										<title>API Configuration</title>
+									</apiconfig>
+									<tabssection translate="title" module="reviewandqa">
+										<title>Tabs Settings</title>
+									</tabssection>
+									<richsnippets translate="title" module="reviewandqa">
+										<title>Rich Snippets</title>
+									</richsnippets>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
 </config>

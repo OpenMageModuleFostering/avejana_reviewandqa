@@ -323,6 +323,24 @@
 						</send_url>
 					</fields>
 				</sales_api>
+				<!--<snippets_api translate="label">
+					<label>Snippets URL Configuration</label>
+					<sort_order>7</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>0</show_in_website>
+					<show_in_store>0</show_in_store>
+					<fields>
+						<send_url translate="label comment">
+							<label>Snippets API URL</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+							<comment>Snippets API URL of Avejana</comment>
+						</send_url>
+					</fields>
+				</snippets_api>-->
 			</groups>
 		</apiconfig>
 		

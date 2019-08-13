@@ -15,19 +15,15 @@ class Avejana_ReviewAndQA_Block_Product_View_Reviews extends Mage_Review_Block_P
 		parent::_prepareLayout();
 		
 		$answers = Mage::getSingleton('core/session')->getAvejanaReplies(); 		
-		$answers = unserialize($answers);  
+		$answers = unserialize($answers);  // echo "<pre>";print_r($answers);exit;
 		$avejanaAvgRating = 0;
-		$inactive_review = array();
-		$approve_review = array();
 		Mage::getSingleton('core/session')->setAvejanaAvgRating($avejanaAvgRating);
 		foreach( $answers as $key => $answer ){						
 				$key = (string)$key;
 				if($key != 'pid'){
-					
 						$IsReviewUpdated = (int)$answer->IsReviewUpdated;
 						$IsReviewActive = (int)$answer->IsActive;
-						
-						if($IsReviewUpdated == '0' && $IsReviewActive == '1'){
+						if($IsReviewUpdated == '0'){
 							//echo $avejanaAvgRating
 							$review_ids[] = (int)$this->insertAvejanaReview($answer);
 							$avejanaAvgRating = $avejanaAvgRating + (int)($answer->Ratings);
@@ -37,74 +33,29 @@ class Avejana_ReviewAndQA_Block_Product_View_Reviews extends Mage_Review_Block_P
 						if( $IsReviewActive != '0'){							
 							$review_ids[] = (int)$answer->ReviewID;
 							$avejanaAvgRating = $avejanaAvgRating + (int)($answer->Ratings);
-							$approve_review[] = (int)$answer->ReviewID;
-						}
-						$IsReviewActive = (string)$answer->IsActive;
-						if($IsReviewActive == "0"){ 
-							$inactive_review[] = (int)$answer->ReviewID;
-						}
-				}
+				}		}
 			
 		}
 		
-		// unpublish review code start	
-		if(sizeof($inactive_review) > 0){			
-		   
-		   $reviews_disable = Mage::getModel('review/review')->getCollection()->addFieldToFilter('main_table.review_id', array('in' => $inactive_review))->setDateOrder()->getItems();
-		   
-		   foreach($reviews_disable as $_review){		
-				$reviewId =  (int)$_review->getReviewId();
-				$review = Mage::getModel('review/review')->load($reviewId);
-			
-				try {
-					$review->setStatusId(Mage_Review_Model_Review::STATUS_PENDING)->setStoreId(Mage::app()->getStore()->getId())->save();	
-				} catch (Exception $e){
-					//echo $e->getMessage();   
-				} 
-										
-			} 					
-		}
-		
-		// approve review in magento
-		if(sizeof($approve_review) > 0){			
-		   
-		   $reviews_disable = Mage::getModel('review/review')->getCollection()->addFieldToFilter('main_table.review_id', array('in' => $approve_review))->setDateOrder()->getItems();
-		   
-		   foreach($reviews_disable as $_review){	
-				$reviewId = (int)$_review->getReviewId();
-				$review = Mage::getModel('review/review')->load($reviewId);
-				
-				try {
-					$review->setStatusId(Mage_Review_Model_Review::STATUS_APPROVED)->setStoreId(Mage::app()->getStore()->getId())->save();
-				} catch (Exception $e){ 
-				} 
-			} 					
-		}
-		
-		//$avejanaAvgRating = $avejanaAvgRating*20/count($review_ids);
-		//echo sizeof($review_ids);exit;
-		Mage::getSingleton('core/session')->setAvejanaTotalReviews(sizeof($review_ids));
-		if(sizeof($review_ids) > 0){
-			
-			
-			Mage::getSingleton('core/session')->setAvejanaAvgRating($avejanaAvgRating);		
-					$all_review = Mage::getModel('review/review')->getCollection()->addFieldToFilter('main_table.review_id', array('in' => $review_ids))->setDateOrder()->getItems();		$AwejanaReviewDiffrence = array();		$mageIDArr = array();				
-					foreach($all_review as $_review){								
-						$StatusId = $_review->getStatusId();				
-						if($StatusId == 0){					 
-							$_review->setStatusId(1)->save();				
-						}				
-						$mageIDArr[] = $_review->getReviewId();		
-					} 						
-							
-					$reviewCollection = $this->getReviewsCollection()->addFieldToFilter('main_table.review_id', array('in' => $review_ids))->SetOrder('main_table.review_id', 'DESC');		
-					//$reviewCollection = $this->getReviewsCollection()->addFieldToFilter('main_table.review_id', array('in' => $review_ids))->SetOrder('main_table.created_at', 'DESC');		
-					$pager = $this->getLayout()->createBlock('page/html_pager', 'reviews.pager');
-					$pager->setAvailableLimit(array(5=>5, 10=>10, 20=>20, 50=>50));    
-					$pager->setCollection($reviewCollection); 
-			
-					$this->setChild('pager', $pager);
-      	}	
+		$avejanaAvgRating = $avejanaAvgRating*20/count($review_ids);
+		Mage::getSingleton('core/session')->setAvejanaAvgRating($avejanaAvgRating);		
+				$all_review = Mage::getModel('review/review')->getCollection()->addFieldToFilter('main_table.review_id', array('in' => $review_ids))->setDateOrder()->getItems();		$AwejanaReviewDiffrence = array();		$mageIDArr = array();				
+				foreach($all_review as $_review){								
+					$StatusId = $_review->getStatusId();				
+					if($StatusId == 0){					 
+						$_review->setStatusId(1)->save();				
+					}				
+					$mageIDArr[] = $_review->getReviewId();		
+				} 						
+				Mage::getSingleton('core/session')->setAvejanaTotalReviews(count($review_ids));		
+				//$reviewCollection = $this->getReviewsCollection()->addFieldToFilter('main_table.review_id', array('in' => $review_ids))->SetOrder('main_table.review_id', 'DESC');		
+				$reviewCollection = $this->getReviewsCollection()->addFieldToFilter('main_table.review_id', array('in' => $review_ids))->SetOrder('main_table.created_at', 'DESC');		
+				$pager = $this->getLayout()->createBlock('page/html_pager', 'reviews.pager');
+				$pager->setAvailableLimit(array(5=>5, 10=>10, 20=>20, 50=>50));    
+				$pager->setCollection($reviewCollection); 
+        
+		$this->setChild('pager', $pager);
+      		
 		return $this;
 	}
 
@@ -162,21 +113,22 @@ class Avejana_ReviewAndQA_Block_Product_View_Reviews extends Mage_Review_Block_P
 			
 			if($review->getId() != ''){
 				$data = array(
-					'InternalReviewID' => $answer->InternalReviewID,
-					'ReviewID' => $review->getId(),
-					'CompanyID' => $this->_helper()->getCompanyId(),
+					'InternalReviewID ' => $answer->InternalReviewID,
+					'ReviewID ' => $review->getId(),
+					'CompanyID ' => $this->_helper()->getCompanyId(),
 					'IsReviewUpdated' => 1,
 					
 				);
-				
+				//echo '<pre>'; print_r($data);
 				$header_arr = array(
 					"content-type: application/x-www-form-urlencoded",
 					"rest-ajevana-key: ".$this->_helper()->getApiKey()."",
 					"user-id: ".$this->_helper()->getUserId().""
 				); 
 				
-				$url = 'https://company.avejana.com/api/set_review_status';//Mage::getStoreConfig('apiconfig/review_api/update_url');
+				$url = Mage::getStoreConfig('apiconfig/review_api/send_url');
 				$ajax_response = $this->callPUTCurl($url, $data, $header_arr);
+				// print_r($ajax_response);
 			}
 			return $review->getId();
 		}

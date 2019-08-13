@@ -60,7 +60,7 @@ class Avejana_ReviewAndQA_Model_Observer{
 	}
 	
 	public function get_reviews_replies_from_avejana($observer){	
-		$url = Mage::getStoreConfig('apiconfig/review_api/reply_url');
+		$url = Mage::getStoreConfig('apiconfig/review_api/reply_url');		
 		$replies = '';
 		Mage::getSingleton('core/session')->setAvejanaReplies(serialize($replies));
 		
@@ -84,7 +84,7 @@ class Avejana_ReviewAndQA_Model_Observer{
 		if($status == 'success'){
 			//$this->session->addSuccess($status);
 			$replies = $message;
-			//$replies['pid'] = $product_id;
+			$replies['pid'] = $product_id;
 		}else{
 			//$this->session->addError('fail to open replies on reviews');
 		}
@@ -203,7 +203,7 @@ class Avejana_ReviewAndQA_Model_Observer{
 			"rest-ajevana-key: ".$this->_helper()->getApiKey()."",
 			"user-id: ".".$this->_helper()->getUserId().".""
 		); 
-		$url = "http://brand.avejana.com/api/product";
+		//$url = "http://brand.avejana.com/api/product";
 		
 		$ajax_response = $this->callPUTCurl($url, $data, $header_arr);
 		$response = json_decode($ajax_response);
@@ -244,18 +244,36 @@ class Avejana_ReviewAndQA_Model_Observer{
 		);
 		$items = $order->getAllItems();
 			
-		foreach($items as $item){	
+		$product_price  = 0;
+		foreach($items as $item){			
+			if($product_price == 0){
+				$product_price = $item->getPrice();
+			}
+			$pid = $item->getProductId();
+			$product= Mage::getModel('catalog/product')->load($pid);
 			
-			if($item->getProductType() == 'simple'){
-				//$parentItem = Mage::getModel('sales/order_item')->load($item->getParentItemId());
-				$parentItem = $item->getParentItem();
-				$data['ProductID'] = $parentItem->getProductId();
-				$data['Price'] = number_format((float)$parentItem->getPrice(), 2, '.', '');
-				$data['Quantity'] = $item->getQtyOrdered();
-				$data['Type'] = $item->getProductType();
-				$ajax_response = $this->callPUTCurl($url, $data, $header_arr);
-				//$this->session->addSuccess($data['ProductID']);
-			}		
+			$attributeSetModel = Mage::getModel("eav/entity_attribute_set")->load($product->getAttributeSetId());
+			$attributeSetName  = $attributeSetModel->getAttributeSetName();
+
+			$parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+
+			if ($product->getTypeId() == 'simple' && empty($parentIds) && $attributeSetName == 'Default') {
+					
+					$data['ProductID'] = $item->getProductId();
+			}else{
+					if(sizeof($parentIds) > 0){
+						$productId = $parentIds[0];
+					}else{
+						$productId = $item->getProductId();
+					}
+					$data['ProductID'] = $productId;
+					
+			}	
+			
+			$data['Price'] = number_format((float)$product_price, 2, '.', '');
+			$data['Quantity'] = $item->getQtyOrdered();
+			$data['Type'] = $item->getQtyOrdered();
+			$ajax_response = $this->callPUTCurl($url, $data, $header_arr);
 			
 		}
 		return true;

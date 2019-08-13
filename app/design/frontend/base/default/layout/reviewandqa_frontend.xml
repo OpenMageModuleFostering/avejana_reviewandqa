@@ -1,0 +1,35 @@
+<layout version="0.1.0">
+
+	<catalog_product_view>
+	
+		<reference name="head">
+			<action method="addCss"><stylesheet>css/reviewandqa.css</stylesheet></action>
+		</reference>
+		
+		<reference name="product.info">
+			<action method="unSetChild" ifconfig="tabssection/general/description">
+				<name>description</name>
+			</action>
+			<action method="unSetChild" ifconfig="tabssection/general/additional">
+				<name>additional</name>
+			</action>
+			<action method="unSetChild" ifconfig="tabssection/general/reviews">
+				<name>reviews</name>
+			</action>
+			 <block type="reviewandqa/catalog_product_view_markup"
+                   template="reviewandqa/catalog/product/view/markup.phtml"
+                   name="mp.reviewandqa"/>
+		</reference>
+        	
+		<reference name="product.info.additional">
+			<block type="reviewandqa/product_view_tabs" name="ext.tabs" as="ext-tabs" before="-">
+				<action method="setTemplate">
+					<template>reviewandqa/tabs.phtml</template>
+				</action>
+			</block>
+		</reference>
+		
+	</catalog_product_view>
+
+</layout>
+
