@@ -1,0 +1,115 @@
+<a id="qa-tab-open" name="question-form"></a>
+<?php 	$current_product 	=  Mage::registry('current_product');
+		$avejanaQAlist 		=  $this->getAvejanaQuestionAnswerListing($current_product->getId());
+?>
+<div class="av-page-title">
+    <a href="javascript:void(0)" class="qatitle"><?php echo Mage::helper('avejanarms')->__('Ask a Question') ?></a>
+</div>
+<div class="qaformarea avejana-content">
+<form action="<?php echo $this->getUrl('avejanarms/qa/qapost'); ?>" id="avejanaqa" method="post" class="scaffold-form">
+    <div class="fieldarea">
+        
+        <ul class="av-form-list">
+			<input type="hidden" name="product_id" value="<?php echo $current_product->getId();?>"/> 
+			
+			<?php if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+ 
+					// Load the customer's data
+					$customer = Mage::getSingleton('customer/session')->getCustomer();
+					echo '<input name="name" id="name" value="'.$customer->getName().'" class="input-text required-entry" type="hidden" />';
+
+					echo '<input name="email" id="email" value="'.$customer->getEmail().'" class="input-text required-entry validate-email" type="hidden"  />';
+
+
+				}else{ ?>
+				<div class="nameandemail">
+					<li class="fields formli">
+						<label for="name" class="required lilabel"><em>*</em><?php echo Mage::helper('avejanarms')->__('Name') ?></label>
+						<div class="input-box">
+							<input name="name" id="name" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Name')) ?>" value="" class="input-text required-entry" type="text" />
+						</div>
+					</li>
+					<li class="field formli">
+						<label for="email" class="required lilabel"><em>*</em><?php echo Mage::helper('avejanarms')->__('Email') ?></label>
+						<div class="input-box">
+							<input name="email" id="email" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Email')) ?>" value="" class="input-text required-entry validate-email" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" />
+						</div>
+					 </li>
+				</div>
+			<?php }?>
+			
+            <li class="wide formli">
+                <label for="question" class="required lilabel"><em>*</em><?php echo Mage::helper('avejanarms')->__('Question') ?></label>
+                <div class="input-box">
+                    <textarea name="question" id="question" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Question')) ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="buttons-set">
+        <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+        <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Submit')) ?>" class="button"><span><span><?php echo Mage::helper('avejanarms')->__('Submit') ?></span></span></button>
+    </div>
+</form>
+</div>
+	<div class="collateral-box" id="product-q-a">
+		<?php 
+	if(count($avejanaQAlist)>0){
+		$i=0; foreach($avejanaQAlist as $_qa){
+			if($_qa->Answer != ''){ 
+				$i=$i+1;
+				$qafirst_letter = substr($_qa->UserName, 0 , 1);
+		?>	
+				<div class="qafields avejana-review-feld">
+					<div class="avejana-initial" >
+						<a href="javascript:void(0)">
+							<span class="first-letter"><?php echo ucfirst($qafirst_letter); ?></span>
+						</a>
+					</div>
+					<div class="avejana-feed"><div class="avejana-initial2" >
+						<strong><a href="javascript:void(0)" class="text-muted"><?php echo $_qa->UserName; ?></a></strong>&nbsp;<small class="text-muted"><?php echo $this->formatDate($_qa->QuestionDate);?></small>
+						
+						<div class="reviewtitle" >
+							<a href="javascript:void(0)"><?php echo $this->htmlEscape($_qa->Question);?></a>
+						</div>
+						
+						
+						<div class="avejana-responce">
+							<p class="avejana-header">
+								<i class="fa fa-comment"></i>&nbsp;<span><?php echo $_qa->AnsweredBy; ?></span> 
+								Response :
+							</p>
+							<div class="response">
+								<p class="detail"><?php echo $_qa->Answer; ?></p>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div style="clear:both"></div>
+				<div class="hrline"><hr></div>
+		  </div>
+		<?php }
+		} 
+		if($i>0){?>
+		<script>
+			$j(document).ready(function(){
+				$j(".toggle-tabs li").each(function(index) {
+					 if($j(this).find("span").text() == "Q&A"){
+						 $j(this).find("span").html("Q&A "+" (<?php echo $i;?>)");
+					 }
+				});
+			})
+		</script>
+		<?php }
+	} ?>
+	</div>
+<script type="text/javascript">
+//<![CDATA[
+    var ravejanaeview = new VarienForm('avejanaqa', true);
+//]]>
+	jQuery('.qaformarea').css("display","none");
+	jQuery( ".qatitle" ).click(function() {
+	   jQuery('.qaformarea').toggle();
+	});
+</script>

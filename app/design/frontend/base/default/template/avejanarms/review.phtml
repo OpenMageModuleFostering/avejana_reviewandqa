@@ -1,0 +1,219 @@
+<a id="review-tab-open" name="review-form"></a>
+<?php 
+		$moduledir=Mage::getModuleDir('controllers', 'Avejana_AvejanaRMS');
+		include_once($moduledir.'/PageLister-1.2.php');
+
+		$current_product 	= 	Mage::registry('current_product');
+		$avejanareviewes	= 	$this->getAvejanaReviesListing($current_product->getId());
+		
+		$pageviews			=	Mage::helper('avejanarms')->getPageView($current_product->getId());
+		$is_logo_show			=	Mage::helper('avejanarms')->getLogoShow();
+		$is_rich_snippet_show	=	Mage::helper('avejanarms')->getRichSnippet();
+		//echo $userurl	=	Mage::helper('avejanarms')->getUsersnurl();
+		
+		if($is_rich_snippet_show==1){
+			echo $this->getLayout()->createBlock('avejanarms/catalog_product_view_markup')->setTemplate('avejanarms/catalog/product/view/markup.phtml')->toHtml();
+		}
+		
+		if($is_logo_show==1){
+			$showlogo_position 	= 	Mage::getStoreConfig('avejanasetting/avejanaconfiguration/logoposition');
+			$reivew_logo_url 	= 	Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'Avejana/avejana-new-logo.png';	
+		}
+		
+
+?>		
+<div class="avejanarms">
+	
+	<?php if($is_logo_show==1){?>
+		<div class="avejana-review-reply aveja-logo-holder <?php echo $showlogo_position; ?>">
+			<div class="avejana_link" ><a target="_blank" href="https://avejana.com/">Powered By</a></div><div class="awejana-logo" ><a target="_blank" href="https://avejana.com/"><img src="<?php echo $reivew_logo_url; ?>" height="21px" alt="" class="avejana-logo"></a></div>
+		</div>
+	<?php } ?>
+	<div class="avejana_review_section">
+		<div class="av-page-title avejanatitle">
+			<a class="review_form_display" href="javascript:void(0)"><?php echo Mage::helper('avejanarms')->__('Write a Review') ?></a>
+
+			<?php 
+				  $averageratingandcount		=	Mage::helper('avejanarms')->averageRating($current_product->getId());
+					if (!empty($averageratingandcount)){
+						if($averageratingandcount['reviewcount']>0){
+			?>
+							<div class="pull-right"> 
+								<span class="review-total"><strong style="line-height: 30px;"><?php echo $averageratingandcount['reviewcount'];?> review(s)</strong></span>
+
+								 <div class="stars star-ratings-sprite">
+									 <span style="width:<?php echo $averageratingandcount['avgrating']; ?>%" class="star-ratings-sprite-rating"></span>
+								 </div>
+							</div>
+
+			<?php 	} 
+					}?>
+
+		</div>
+	<div class="avejanareviewform avejana-content">
+		<form action="<?php echo $this->getUrl('avejanarms/index/reviewpost'); ?>" id="ravejanaeview" method="post" class="scaffold-form">
+			<div class="fieldarea">
+				<input type="hidden" name="product_id" value="<?php echo $current_product->getId();?>"/> 
+				<ul class="av-form-list">
+					<li class="avratings">
+						<label for="name" class="required ratingli"><em>*</em><?php echo Mage::helper('avejanarms')->__('Your Rating') ?></label>
+
+							<span class="starRating">
+								<input id="rating5" type="radio" name="rating" value="5">
+								<label for="rating5">5</label>
+								<input id="rating4" type="radio" name="rating" value="4">
+								<label for="rating4">4</label>
+								<input id="rating3" type="radio" name="rating" value="3" >
+								<label for="rating3">3</label>
+								<input id="rating2" type="radio" name="rating" value="2">
+								<label for="rating2">2</label>
+								<input id="rating1" type="radio" name="rating" value="1">
+								<label for="rating1">1</label>
+						   </span>
+
+					</li>
+					<li class="formli">
+						<label for="name" class="lilabel required"><em>*</em><?php echo Mage::helper('avejanarms')->__('Title') ?></label>
+						<div class="input-box">
+							<input name="title" id="title" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Title')) ?>" value="" class="input-text required-entry validate-length maximum-length-100" maxlength="100" type="text" />
+						</div>
+					</li>
+
+					<?php if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+
+						// Load the customer's data
+						$customer = Mage::getSingleton('customer/session')->getCustomer();
+						echo '<input name="name" id="name" value="'.$customer->getName().'" class="input-text required-entry" type="hidden" />';
+
+						echo '<input name="email" id="email" value="'.$customer->getEmail().'" class="input-text required-entry validate-email" type="hidden"  />';
+
+
+					}else{ ?>
+
+
+						<li class="fields formli">
+							<label for="name" class="lilabel required"><em>*</em><?php echo Mage::helper('avejanarms')->__('Name') ?></label>
+							<div class="input-box">
+								<input name="name" id="name" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Name')) ?>" value="" class="input-text required-entry" type="text" />
+							</div>
+						</li>
+						<li class="field formli">
+							<label for="email" class="lilabel required"><em>*</em><?php echo Mage::helper('avejanarms')->__('Email') ?></label>
+							<div class="input-box">
+								<input name="email" id="email" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Email')) ?>" value="" class="input-text required-entry validate-email" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" />
+							</div>
+						 </li>
+
+					<?php } ?>
+
+					<li class="wide formli">
+						<label for="comment" class="lilabel required"><em>*</em><?php echo Mage::helper('avejanarms')->__('Review') ?></label>
+						<div class="input-box">
+							<textarea name="comment" id="comment" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Review')) ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+						</div>
+					</li>
+				</ul>
+
+			</div>
+			<div class="buttons-set">
+				<input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+				<button type="submit" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('avejanarms')->__('Submit')) ?>" class="button"><span><span><?php echo Mage::helper('avejanarms')->__('Submit') ?></span></span></button>
+			</div>
+		</form>
+	</div>
+
+		 <div class="avejana-review-reply">
+			<?php 
+			if($avejanareviewes){
+				$currentPage = !empty($_GET['page']) ? (int) $_GET['page'] : 1;
+ 				$allItems = array();
+				$totalreviewcount = count($avejanareviewes);
+				
+				foreach($avejanareviewes as $_review){
+				$first_letter = substr($_review->UserName, 0 , 1);
+					$ratingpercentage=  $_review->Ratings*20;
+					$replysction = $_review->Reply != "" ? 
+									'<div class="avejana-responce">
+										<p class="avejana-header">
+											<i class="fa fa-comment"></i>&nbsp;<span>'.$_review->RepliedBy.'</span> 
+											Response :
+										</p>
+										<div class="response">
+											<p class="detail">'.$_review->Reply.'</p>
+										</div>
+									</div>' : '';
+					$allItems[]= '
+					<div class="avejanahoriline"><hr style="width: 100%;"></div>
+						<div class="avejana-review-feld">
+							<div class="avejana-initial" >
+								<a href="javascript:void(0)">
+									<span class="first-letter">'.ucfirst($first_letter).'</span>
+								</a>
+							</div>
+							<div class="avejana-feed"><div class="avejana-initial2" >
+								<strong><a href="javascript:void(0)" class="text-muted">'.$_review->UserName.'</a></strong>&nbsp;<small class="text-muted">'.$this->formatDate($_review->ReviewDate).'</small>
+								<div class=" avejana-small-star">
+									<div id="review_rate" class="display_rate avejana-container"  readonly="readonly">
+
+										<div class="stars star-ratings-sprite"><span style="width:'.$ratingpercentage.'%" class="star-ratings-sprite-rating"></span></div>
+
+									</div>
+								</div>
+								<div class="reviewtitle" >
+									<a href="javascript:void(0)">'.$_review->Title.'</a>
+								</div>
+								<div class="avejana-tweet">
+									<p style="color: #333;">'.$review_destails = nl2br($_review->Description).'</p>
+								</div>'.$replysction.'</div>
+						</div>
+				  </div>';?>
+				<?php } 
+				/*************Pagination Code**************/
+				
+				$pl = new PageLister($allItems, $currentPage);
+				//print_r($pl);die;
+				 $pageList = $pl->makePageList();
+				//print_r($pageList);
+				$currentItems = $pl->getCurrentItems();
+				$itemcount = count($currentItems);
+				/**
+				 * Finally output the current page items and the pagelist
+				 */
+
+				
+
+				foreach ($currentItems as $item)
+				{
+				  echo "$item <br />\n";
+				}
+				
+				if($totalreviewcount>10){
+					echo "Pages: \n";
+
+					foreach ($pageList as $page)
+					{
+						// make sure only valid urls are clickable (prev page at page 1 won't yield a valid previous next page)
+						if ($page['url']) {
+						  echo "<a href='?page={$page['page']}'>{$page['label']}</a> ";
+						}
+						else {
+						  echo $page['label'].' ';
+						}
+					}		
+				}
+				
+				
+				}	?>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var ravejanaeview = new VarienForm('ravejanaeview', true);
+//]]>
+	jQuery('.avejanareviewform').css("display","none");
+	jQuery( ".review_form_display" ).click(function() {
+	   jQuery('.avejanareviewform').toggle();
+	});
+	
+</script>

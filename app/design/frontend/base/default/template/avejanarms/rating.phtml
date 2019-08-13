@@ -1,0 +1,78 @@
+<?php 
+$avejanamodule 		= 		Mage::getStoreConfig('avejanasetting/avejanaconfiguration/active');
+if($avejanamodule==1){  //check if module is enabled
+	$current_product 	=  Mage::registry('current_product');
+	$cpBlock 		= 		$this->getLayout()->getBlockSingleton('Avejana_AvejanaRMS_Block_Index');
+	$QAlisting	=		$cpBlock->getAvejanaQuestionAnswerListing($current_product->getId());
+	$qa			=	0;
+	if(count($QAlisting)>0){
+		 foreach($QAlisting as $_qa){
+				if($_qa->Answer != ''){ 
+					$qa=$qa+1;
+				}
+		}
+	}
+
+	$avgratingandcount	=    	$this->getRatingSummary();
+	if (!empty($avgratingandcount)){
+		if($avgratingandcount['reviewcount']>0){?>
+
+	<script>
+		$j(document).ready(function(){
+			
+			$j(".toggle-tabs li").each(function(index) {
+				 if($j(this).find("span").text() == "Reviews"){
+					 $j(this).find("span").html("Reviews "+" (<?php echo $avgratingandcount['reviewcount'];?>)");
+				 }
+			});
+		})
+	</script>
+	<div class="ratings">
+
+		<div class="stars star-ratings-sprite"><span style="width:<?php echo $avgratingandcount['avgrating'] ?>%" class="star-ratings-sprite-rating"></span></div>
+		<p class="rating-links">
+			<a href="#review-form" class="reviewformopen" id="review-form"><?php echo $this->__('%d Review(s)', $avgratingandcount['reviewcount'])?></a>
+			
+			<span class="separator">|</span>
+			<a href="#question-form" class="qaformopen" id="question-form"><?php if($qa>0){echo "Q&A($qa)";}else{ echo 'Ask a Question';} ?></a>
+		</p>
+	</div>
+	<?php 
+		} 
+	}else{?>
+		<p class="no-rating">
+			<a href="#review-form" class="reviewformopen" id="review-form"><?php echo $this->__('Be the first to review this product') ?></a>
+			<span class="separator">|</span>
+			<a href="#question-form" class="qaformopen" id="question-form"><?php if($qa>0){echo "Q&A($qa)";}else{ echo 'Ask a Question';}  ?></a>
+		</p>
+	<?php } ?>
+
+
+<script type="text/javascript">
+        //<![CDATA[
+	$j(document).on('click',".reviewformopen", function(event){
+		$j(".collateral-tabs .tab-container").removeClass("current");
+		$j('#review-tab-open').closest('dd').addClass("current"); 
+		$j('.toggle-tabs li').removeClass("current");
+		$j(".toggle-tabs li:contains('Reviews')").addClass("current");
+		$j('html, body').animate({
+				scrollTop: $j(".collateral-tabs").offset().top-100
+		}, 1000);
+  	 });
+	
+	$j(document).on('click',".qaformopen", function(event){
+		$j(".collateral-tabs .tab-container").removeClass("current");
+		$j('#qa-tab-open').closest('dd').addClass("current"); 
+		$j('.toggle-tabs li').removeClass("current");
+		$j(".toggle-tabs li:contains('Q&A')").addClass("current");
+		$j('html, body').animate({
+				scrollTop: $j(".collateral-tabs").offset().top-100
+		}, 1000);
+  	 });
+	
+	
+	
+  	
+   //]]>
+   </script>
+<?php }?>

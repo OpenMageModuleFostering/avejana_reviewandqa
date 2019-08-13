@@ -1,0 +1,39 @@
+<?php 
+$customtabenable 		= 		Mage::getStoreConfig('avejanasetting/avejanaconfiguration/customtab');
+$avejanamodule 			= 		Mage::getStoreConfig('avejanasetting/avejanaconfiguration/active');
+if(($customtabenable==1) && ($avejanamodule==1)){  //check if custom tab is enabled ?>
+<div class="avejana-tabs">
+    <ul class="avejana-tab-links">
+        <li class="active"><a href="#avejana-tab1">Reviews</a></li>
+        <li><a href="#avejana-tab2">Q&amp;A</a></li>
+    </ul>
+
+    <div class="avejana-avejana-tab-content">
+        <div id="avejana-tab1" class="avejana-tab active">
+            <?php echo $this->getLayout()->createBlock('avejanarms/index')->setTemplate('avejanarms/review.phtml')->toHtml(); ?>
+        </div>
+
+        <div id="avejana-tab2" class="avejana-tab">
+            <?php echo $this->getLayout()->createBlock('avejanarms/index')->setTemplate('avejanarms/qa.phtml')->toHtml(); ?>
+        </div>
+
+    </div>
+</div>
+
+<script>
+	jQuery(document).ready(function() {
+		jQuery('.avejana-tabs .avejana-tab-links a').on('click', function(e)  {
+			var currentAttrValue = jQuery(this).attr('href');
+
+			// Show/Hide avejana-tabs
+			jQuery('.avejana-tabs ' + currentAttrValue).show().siblings().hide();
+
+			// Change/remove current avejana-tab to active
+			jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+
+			e.preventDefault();
+		});
+	});
+</script>
+
+<?php } ?>

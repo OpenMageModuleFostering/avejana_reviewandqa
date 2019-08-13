@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<config>
+	  <tabs>
+		<avejana translate="label" module="avejanarms">
+            <label>AveJana</label>
+            <sort_order>0</sort_order>
+        </avejana>
+	  </tabs>
+	  <sections>
+		<avejanasetting  translate="label" module="avejanarms">                    
+		<label>General Settings</label>
+		<tab>avejana</tab>
+		<frontend_type>text</frontend_type>
+		<sort_order>0</sort_order>
+		<show_in_default>1</show_in_default>
+		<show_in_website>1</show_in_website>
+		<show_in_store>1</show_in_store>            
+					<groups>
+					    <extensions translate="label">
+							<label>Avejana Modules Manager</label>
+							<frontend_model>avejanarms/system_config_extension</frontend_model>
+							<frontend_type>text</frontend_type>
+							<sort_order>0</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</extensions>
+						
+				      <avejanaconfiguration translate="label"> 
+					  <label>AveJana Configuration</label>
+					  <frontend_type>text</frontend_type>
+					  <sort_order>1</sort_order>
+					  <show_in_default>1</show_in_default>
+					  <show_in_website>1</show_in_website>
+					  <show_in_store>1</show_in_store>
+				       <fields>
+                          <active translate="label">
+                            <label>Enable/Disable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                          </active>
+                          <companyid translate="label">
+                            <label>Company ID</label>
+							<frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Enter Company ID provided by Avejana</comment>
+                          </companyid>
+                          <avejanakey translate="label">
+                            <label>AveJana Key</label>
+							<frontend_type>password</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Enter AveJana Key provided by Avejana</comment>
+                          </avejanakey>
+                          <companyurl translate="label">
+                            <label>Company URL</label>
+							<frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Automatically Generated URL</comment>
+                          </companyurl>
+                          <logoposition translate="label">
+                            <label>Avejana Logo Position in Review Tab</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>avejanarms/system_config_source_Diyoptions14924550424</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Please select Logo position</comment>
+                          </logoposition>
+						   <customtab translate="label">
+                            	<label>If Default Tab is not active on website then Enable custom Tabs</label>
+                            	<frontend_type>select</frontend_type>
+                            	<source_model>adminhtml/system_config_source_yesno</source_model>
+                            	<sort_order>5</sort_order>
+                            	<show_in_default>1</show_in_default>
+                            	<show_in_website>1</show_in_website>
+                            	<show_in_store>1</show_in_store>
+                           </customtab>
+						   <salesbutton translate="label">
+                           	   <label>Upload Sales Data in Avejana</label>
+							   <frontend_type>button</frontend_type>
+							   <frontend_model>avejanarms/uploadbutton</frontend_model>
+							   <sort_order>20</sort_order>
+							   <show_in_default>1</show_in_default>
+							   <show_in_website>1</show_in_website>
+							   <show_in_store>1</show_in_store>
+                          </salesbutton>
+					   </fields>
+					   </avejanaconfiguration>
+					</groups>
+		</avejanasetting>
+	  </sections>
+</config>

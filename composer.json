@@ -1,12 +1,12 @@
 {
     "name": "OpenMageModuleFostering/Avejana_ReviewAndQA",
     "type": "magento-module",
-    "license": "OSL-V3.0",
+    "license": "OSL-v3.0",
     "homepage": "",
-    "description": "aveJana helps automate reviews, generate more reviews, drive more qualified traffic and increase conversions.",
+    "description": "aveJana Reviews and Q&A",
     "authors": [
     {
-        "name": "Amit Sharma",
+        "name": "aveJanaReviews",
         "email": "amit.sharma@avejana.com"
     }
 ],

@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<config>
-  <modules>
-    <Avejana_ReviewAndQA>
-      <active>true</active>
-      <codePool>community</codePool>
-    </Avejana_ReviewAndQA>
-  </modules>
-</config>
