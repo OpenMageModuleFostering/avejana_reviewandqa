@@ -83,10 +83,9 @@ class Avejana_AvejanaRMS_Model_Observer{
 
 		try
 		{
-			$url = Mage::helper('avejanarms')->getCompanyUrl().'/api/review/';
-
-			$event = $observer->getEvent();
-			$reviewdata = $event->getreviewdata();
+			$url 		= 	Mage::helper('avejanarms')->getCompanyUrl().'/api/review/';
+			$event 		= 	$observer->getEvent();
+			$reviewdata = 	$event->getreviewdata();
 
 			$data = array(
 
@@ -142,7 +141,6 @@ class Avejana_AvejanaRMS_Model_Observer{
 	 public function export_product_to_avejana($product){	
 		
 		$url = Mage::helper('avejanarms')->getUserUrl().'/api/product/';
-
 		try{
 			$imageurl  = $product->getImage();
 			if($imageurl == 'no_selection')
@@ -154,6 +152,9 @@ class Avejana_AvejanaRMS_Model_Observer{
 			{
 				 $imageurl=Mage::getModel('catalog/product_media_config')->getMediaUrl($product->getImage());
 			}
+			
+			//$producturl	=	Mage::getUrl().$product->getUrlPath();
+			$producturl	=	Mage::getUrl().$product->getUrlPath();
 			
 			$data = array(
 
@@ -172,7 +173,6 @@ class Avejana_AvejanaRMS_Model_Observer{
 				'ProductPrice' => $product->getPrice(),
 
 			);
-
 			$header_arr = array(
 
 				"content-type: application/x-www-form-urlencoded",
@@ -181,11 +181,11 @@ class Avejana_AvejanaRMS_Model_Observer{
 
 				"user_id: ".Mage::helper('avejanarms')->getUserId().""
 			); 
-			
+			//print_r($data);die;
 			$ajax_response = $this->callPUTCurl($url, $data, $header_arr);
 
 			$response = json_decode($ajax_response);
-			//print_r($ajax_response);die;
+			//print_r($response);die;
 			if($response){
 				$status = $response->status;
 				$attr = $product->getResource()->getAttribute('avejana_product_import');
@@ -225,125 +225,130 @@ class Avejana_AvejanaRMS_Model_Observer{
 	/************send Order API when order placed in magento*************************/
 	public function send_salesdata_to_avejana($observer){
 		
-		$url = Mage::helper('avejanarms')->getUserUrl().'/api/sales/';
+		$url 			= 		Mage::helper('avejanarms')->getUserUrl().'/api/sales/';
 		
-		$con	=	Mage::getSingleton('core/resource');
+		$con			= 		Mage::getSingleton('core/resource');
     		 
-		$write	=	$con->getConnection('core_write');
+		$write			=		$con->getConnection('core_write');
 
-		$order = $observer->getOrder();
-
-		$increment_id = $order->getIncrementId();
+		//$shipment 		= 		$observer->getEvent()->getShipment();
+  		
+		$order 			= 		$observer->getOrder();
 		
-		$orderId 	= $order->getId();
+		if($order->getStatus()=='complete'){
+			//print_r($order->getStatus());die;
+			$increment_id 	= 		$order->getIncrementId();
 
-		$order_date = date_format(date_create($order->getCreatedAtStoreDate()),"Y-m-d");
+			$orderId 		= 		$order->getId();
 
-		$customer_id = $order->getCustomerId();
+			$order_date 	= 		date_format(date_create($order->getCreatedAtStoreDate()),"Y-m-d");
 
-		$privacy = '1';
+			$customer_id 	= 		$order->getCustomerId();
 
-		$customer_name 	= 	$order->getCustomerName();
+			$privacy 		= 		'1';
 
-		$customer_email = 	$order->getCustomerEmail();
-		
-		$customer_dob	=	$order->getCustomerDob();
-		
-		$customer_gender=	$order->getCustomerGender();
+			$customer_name 	= 		$order->getCustomerName();
 
-		$data = array(
+			$customer_email = 		$order->getCustomerEmail();
 
-			'FromCompany' => Mage::helper('avejanarms')->getCompanyId(),
+			$customer_dob	=		$order->getCustomerDob();
 
-			'OrderID' => $increment_id,
+			$customer_gender=		$order->getCustomerGender();
 
-			'OrderDate' => $order_date,
+			$data = array(
 
-			'CustomerName' => $customer_name,
+				'FromCompany' => Mage::helper('avejanarms')->getCompanyId(),
 
-			'CustomerEmail' => $customer_email,
-			
-			'BirthDate' => $customer_dob,
+				'OrderID' => $increment_id,
 
-			'GenderID' => $customer_gender,
+				'OrderDate' => $order_date,
 
-		);
+				'CustomerName' => $customer_name,
 
-		$header_arr = array(
+				'CustomerEmail' => $customer_email,
 
-			"content-type: application/x-www-form-urlencoded",
+				'BirthDate' => $customer_dob,
 
-			"rest-ajevana-key: ".Mage::helper('avejanarms')->getApiKey()."",
+				'GenderID' => $customer_gender,
 
-			"user-id: ".Mage::helper('avejanarms')->getUserId().""
-		); 
+			);
+			//print_r($data);die;
 
-		$items = $order->getAllItems();
+			$header_arr = array(
 
-		$product_price  = 0;
+				"content-type: application/x-www-form-urlencoded",
 
-		foreach($items as $item){			
+				"rest-ajevana-key: ".Mage::helper('avejanarms')->getApiKey()."",
 
-			$product_price = $item->getPrice();
+				"user-id: ".Mage::helper('avejanarms')->getUserId().""
+			); 
 
-			$pid = $item->getProductId();
+			$items = $order->getAllItems();
 
-			$product= Mage::getModel('catalog/product')->load($pid);
+			$product_price  = 0;
 
-			$this->export_product_to_avejana($product);/*********Product export to avejana************/
+			foreach($items as $item){			
 
-			$attributeSetModel = Mage::getModel("eav/entity_attribute_set")->load($product->getAttributeSetId());
+				$product_price = $item->getPrice();
 
-			$attributeSetName  = $attributeSetModel->getAttributeSetName();
+				$pid = $item->getProductId();
 
+				$product= Mage::getModel('catalog/product')->load($pid);
 
+				$this->export_product_to_avejana($product);/*********Product export to avejana************/
 
-			$parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+				$attributeSetModel = Mage::getModel("eav/entity_attribute_set")->load($product->getAttributeSetId());
 
+				$attributeSetName  = $attributeSetModel->getAttributeSetName();
 
 
-			if ($product->getTypeId() == 'simple' && empty($parentIds)) {
 
-					
+				$parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
 
-					$data['ProductID'] = $item->getProductId();
 
-			}else{
 
-					if(sizeof($parentIds) > 0){
+				if ($product->getTypeId() == 'simple' && empty($parentIds)) {
 
-						$productId = $parentIds[0];
 
-					}else{
 
-						$productId = $item->getProductId();
+						$data['ProductID'] = $item->getProductId();
 
-					}
+				}else{
 
-					$data['ProductID'] = $productId;
+						if(sizeof($parentIds) > 0){
 
-					
+							$productId = $parentIds[0];
 
-			}	
+						}else{
 
-			
+							$productId = $item->getProductId();
 
-			$data['Price'] = number_format((float)$product_price, 2, '.', '');
+						}
 
-			$data['Quantity'] = $item->getQtyOrdered();
+						$data['ProductID'] = $productId;
 
-			
 
-			$ajax_response = $this->callPUTCurl($url, $data, $header_arr);
-//echo '<pre>'; print_r($ajax_response);
-			
-		}
-		
-		/**********Update database value of order exported to avejana*************/
-			if($orderId){
-				$query= "update sales_flat_order set order_exported_to_avejana = 1 where entity_id=$orderId";
-				$write->query($query);
+
+				}	
+
+				$data['Price'] = number_format((float)$product_price, 2, '.', '');
+
+				$data['Quantity'] = $item->getQtyOrdered();
+
+
+				//print_r($data);die;
+				$ajax_response = $this->callPUTCurl($url, $data, $header_arr);
 			}
+		//echo '<pre>'; print_r($ajax_response);
+
+
+
+			/**********Update database value of order exported to avejana*************/
+				if($orderId){
+					$query= "update sales_flat_order set order_exported_to_avejana = 1 where entity_id=$orderId";
+					$write->query($query);
+				}
+		}
 			return true;
 	}
 

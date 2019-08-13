@@ -147,11 +147,7 @@
 					</disable_product_attribute_after_load>
 				</observers>
 			</catalog_product_load_after>
-	  </events>
-  </global>    
-	<frontend>
-		<events>
-			<sales_order_place_after>
+		  	<sales_order_save_after>
 				<observers>
 					<export_order_to_avejana_after_place>
 						<type>singleton</type>
@@ -159,8 +155,8 @@
 						<method>send_salesdata_to_avejana</method> 
 					</export_order_to_avejana_after_place> 
 				</observers>
-			</sales_order_place_after>
-		</events>
-	</frontend>
-    
+			</sales_order_save_after>
+	  </events>
+  </global>    
+	   
 </config> 

@@ -154,7 +154,7 @@ class Avejana_AvejanaRMS_IndexController extends Mage_Core_Controller_Front_Acti
 		try{
 			
 			Mage::dispatchEvent('controller_action_postdispatch_allsales_data_to_avejana', array('salesdata'=> 1));
-$this->_redirectReferer();
+//$this->_redirectReferer();
 			$url 	= 	Mage::helper('avejanarms')->getUserUrl().'/api/sales/';
 			 $con	=	Mage::getSingleton('core/resource');
     		 $write	=	$con->getConnection('core_write');
@@ -279,4 +279,105 @@ $this->_redirectReferer();
 		// Mage::getSingleton('adminhtml/session')->addSuccess("Orders has been exported to Avajana");
 		$this->_redirectReferer();
 	}
+	
+	
+	public function reviewloadAction(){
+
+		try{
+			$productid	=	$this->getRequest()->getPost('productid');//die('kk');
+			$url = Mage::helper('avejanarms')->getCompanyUrl().'/api/reviewreply/';	
+			$store_id = Mage::app()->getStore()->getStoreId();
+			$action = Mage::getModel('catalog/resource_product_action');
+			$returnarr =array();
+
+			$data = array(
+
+				'CompanyID' => Mage::helper('avejanarms')->getCompanyId(),
+
+				'ProductID' => $productid
+
+			);
+
+			$header_arr = array(
+
+				"rest-ajevana-key: ".Mage::helper('avejanarms')->getApiKey()."",
+
+				"user-id: ".Mage::helper('avejanarms')->getUserId().""
+
+			); 
+
+			$final_url = $url . "?" . http_build_query($data);
+
+
+
+			$ajax_response = $this->callGETCurl($final_url, $data, $header_arr);
+
+
+			$response = json_decode($ajax_response);
+			//print_r($ajax_response);exit;
+			if($response){
+				$status = $response->status;
+
+				if($response->status=='success'){
+					
+					$totalratings=0;
+					foreach($response->message as $reviews){
+						$totalratings=$totalratings+$reviews->Ratings;
+					}
+					//$product					=	Mage::getModel('catalog/product')->load($productid);
+					$totalreviewcount			=	count($response->message);
+					$averagerating				=	($totalratings/$totalreviewcount)*20;
+					
+					$action->updateAttributes(array($productid), array(
+						'avejana_averagerating' => $averagerating
+					), $store_id);
+					
+					$action->updateAttributes(array($productid), array(
+						'avejana_totalreview' => $totalreviewcount
+					), $store_id);
+					
+					echo $this->getLayout()->createBlock('avejanarms/index')->setTemplate('avejanarms/generatedreview.phtml')->toHtml();
+				}else{
+					$action->updateAttributes(array($productid), array(
+						'avejana_averagerating' => 0
+					), $store_id);
+					
+					$action->updateAttributes(array($productid), array(
+						'avejana_totalreview' => 0
+					), $store_id);
+					$returnarr = array(); 
+				}
+				die;
+			}
+		}catch(Exception $e){
+			print_r($e);
+		}
+	}
+	
+	public function callGETCurl($url, $data, $header_arr){
+
+		
+
+		$ch = curl_init($url);
+
+		curl_setopt($ch, CURLOPT_HEADER, false);
+
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header_arr);
+
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		curl_setopt($ch, CURLOPT_POST, true);
+
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+
+		$response = curl_exec($ch);
+
+		
+
+		return $response;
+
+	}
+
 }
