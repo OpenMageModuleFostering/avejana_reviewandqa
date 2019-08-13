@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Avejana_ReviewAndQA",
+    "type": "magento-module",
+    "license": "OSL-V3.0",
+    "homepage": "",
+    "description": "aveJana helps automate reviews, generate more reviews, drive more qualified traffic and increase conversions.",
+    "authors": [
+    {
+        "name": "Amit Sharma",
+        "email": "amit.sharma@avejana.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

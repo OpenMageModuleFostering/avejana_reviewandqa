@@ -1,0 +1,85 @@
+<?php $entries = $this->getEntries();
+//echo '<pre>';print_r($entries->getData());
+?>
+<div class="collateral-box">
+	<div class="head">
+		<h4><?php echo $this->__('Questions and Answers') ?></h4>
+	</div>
+	<div class="collateral-box" id="product-q-a">
+		
+		<?php if(!$entries->getSize()): ?>
+		<p><strong><a href="#question-form" id="add-question"><?php echo $this->__('Be the First to ask Question'); ?></strong></a></p>
+		<?php else: ?>	 
+		<p><strong><a href="#question-form" id="add-question"><?php echo $this->__('Ask a Question'); ?></strong></a></p>
+		<?php echo $this->getPagerHtml(); ?>      
+		<?php foreach($entries as $entry): ?>
+		<?php 
+		$answer = $this->getAnswerFromAvejana($entry->getQuestionsId());
+		//echo '<pre>';print_r($answer);
+		if(count($answer)){
+			?>
+			<div class="question-entry">
+				<div class="entry-comment"><strong><?php echo $this->__('Q'); ?>: </strong><?php echo $this->htmlEscape($entry->getQuestion()); ?></div>
+				<p>
+					<small class="added-on"><?php echo $this->__('Posted On: '); ?><?php echo $this->formatDate($entry->getCreatedOn()); ?></small>
+					<small class="added-on"><?php echo $this->__('By: '); ?><?php echo $entry->getName(); ?></small>
+				</p>
+				<div class="entry-answer"><strong><?php echo $this->__('A');  ?>: </strong><?php echo $answer['Answer']; ?></div>
+				<p>
+					<small class="added-on"><?php echo $this->__('By: '); ?><?php echo $answer['AnsweredBy']; ?></small>
+				</p>
+				<br />
+				<hr />
+				<br />
+			</div>
+			<?php } ?>	        
+		<?php endforeach; ?>	        
+		<?php endif; ?>	   
+		<?php echo $this->getChildHtml('questionForm'); ?>
+	</div>
+</div>    
+<a name="question-form"></a>
+<form action="<?php echo Mage::getUrl('reviewandqa/questions/addQuestion'); ?>" id="questionForm" method="post" style="display: none;">
+	<div class="fieldset">
+		<h5 class="legend"><?php echo Mage::helper('reviewandqa')->__('Post your question') ?></h5>
+		<ul class="form-list">
+			<li class="fields">
+				<div class="field">
+					<label for="name" class="required"><em>*</em><?php echo Mage::helper('reviewandqa')->__('Name') ?></label>
+					<div class="input-box">
+						<input name="name" id="name" title="<?php echo Mage::helper('reviewandqa')->__('Name') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserName()) ?>" class="input-text required-entry" type="text" />
+					</div>
+				</div>
+				<div class="field">
+					<label for="email" class="required"><em>*</em><?php echo Mage::helper('reviewandqa')->__('Email') ?></label>
+					<div class="input-box">
+						<input name="email" id="email" title="<?php echo Mage::helper('reviewandqa')->__('Email') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserEmail()) ?>" class="input-text required-entry validate-email" type="text" />
+					</div>
+				</div>
+			</li>           
+			<li class="wide">
+				<label for="comment" class="required"><em>*</em><?php echo Mage::helper('reviewandqa')->__('Question') ?></label>
+				<div class="input-box">
+					<textarea name="question" id="question" title="<?php echo Mage::helper('reviewandqa')->__('Question') ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="buttons-set">
+		<p class="required"><?php echo Mage::helper('reviewandqa')->__('* Required Fields') ?></p>
+		<input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+		<input type="hidden" name="product_id" value="<?php echo Mage::registry('product')->getId(); ?>" />
+		<input type="hidden" name="store_id" value="<?php echo Mage::app()->getStore(true)->getStoreId(); ?>" />
+		<button type="submit" title="<?php echo Mage::helper('reviewandqa')->__('Submit') ?>" class="button form-button"><span><span><?php echo Mage::helper('reviewandqa')->__('Submit') ?></span></span></button>
+	</div>
+</form>
+<script type="text/javascript">
+	//<![CDATA[
+	$('add-question').observe('click', function(event){
+			$('questionForm').toggle(); 
+		});
+    
+	var contactForm = new VarienForm('questionForm', true);
+	//]]>
+</script>
+

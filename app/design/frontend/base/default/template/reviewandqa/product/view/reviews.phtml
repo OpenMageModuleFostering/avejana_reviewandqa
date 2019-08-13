@@ -1,0 +1,135 @@
+<?php $_items = $this->getReviewsCollection()->getItems();
+//echo '<pre>'; print_r($this->getReviewsCollection()->getData());
+$avejana_items = $this->getAvejanaReviewsCollection();
+//echo '<pre>'; print_r($avejana_items);
+$updatedReviewIds = Mage::getSingleton('core/session')->getUpdatedReviewIds(); 
+$showlogo_position = '';
+?>
+
+<?php if ($this->getLogoStatus() == '1') {
+$showlogo_position = Mage::getStoreConfig('tabssection/general/where_is_show_logo');
+$reivew_logo_url = Mage::getBaseUrl().'/media/Avejana/avejana-new-logo.png';	
+?>		
+<div class="aveja-logo-holder <?php echo $showlogo_position; ?>">
+	<img src="<?php echo $reivew_logo_url; ?>" alt="" class="avejana-logo">
+</div>
+<?php } ?>
+
+
+<div class="box-collateral box-reviews <?php echo $showlogo_position; ?>" id="customer-reviews">
+	<h4><?php echo $this->__('Customer Reviews') ?></h4>	
+	
+	<?php if(!count($_items)):?>
+	<div class="avejana-review-top-links">
+		<div class="review-form-link"><strong><a href="#review-form" id="add-review"><?php echo $this->__('Be the First to Review'); ?></a></strong></div>
+	</div>
+	<?php else: ?>
+	<div class="avejana-review-top-links">	
+		<div class="review-form-link"><strong><a href="#review-form" id="add-review"><?php echo $this->__('Write Review'); ?></a></strong></div>
+		<div class="avejana-rating-summary">
+			<div class="avejana-review-count"><?php echo count($_items).' Reviews ' ?></div>
+			<div class="ratings-table">
+				<div class="rating-box">
+					<div class="rating" style="width:<?php echo Mage::getSingleton('core/session')->getAvejanaAvgRating() ?>%;"></div>
+				</div>
+			</div>
+		</div> 
+	</div>
+	
+	<div class="avejana-pager"><?php echo $this->getPagerHtml(); ?></div>	
+	<div class="avejana-review-reply">
+		<?php foreach($_items as $_review):
+		//echo $_review->getId();
+		foreach($avejana_items as $key => $avejana_review):
+		
+		if(!($avejana_review->ReviewID == $_review->getId() || in_array($_review->getId(), $updatedReviewIds))){
+			continue;
+		}
+		//echo $avejana_review->ReviewID;
+		if( $answer->IsActive == '1'){
+			$_review->setStatusId(1)->save();
+		}else if( $answer->IsActive == '0'){
+			$_review->setStatusId(3)->save();
+		}
+		$date=date_create($_review->getCreatedAt());
+		?>
+		<div class="avejana-review">
+			<div class="review-section">
+				<div class="review-info">
+					<span class="reviewer"><?php echo$_review->getNickname(); ?></span>
+					<span class="post-date date"><?php echo $this->__('  %s', date_format($date,"d.m.Y")) ?></span>
+				</div>
+				<?php 
+				$_votes = $_review->getRatingVotes(); 
+				if(count($_votes)): 
+				foreach($_votes as $_vote): 
+				?>
+				<div class="ratings-table">
+					<div class="rating-box">
+						<div class="rating" style="width:<?php echo $_vote->getPercent() ?>%;"></div>
+					</div>
+				</div>
+				<?php 
+				endforeach;
+				endif; 
+				?>	
+				<!--<?php echo $this->getReviewUrl($_review->getId()) ?>-->
+				<div class="rview-title ref-link" ><a href="javascript:void(0)"><?php echo $_review->getTitle();?></a></div>
+				<div class="review-descripition">
+					<p class="detail"><?php echo $_review->getDetail(); ?></p>
+				</div>
+			</div>
+			<?php if($avejana_review->Reply != ''){ ?>
+			
+			<div class="avejana-response">
+				<p class="avejana-header"><span class="responsed-by"><?php echo $avejana_review->RepliedBy; ?></span> Response : </p>
+				<div class="response-section">
+					<div class="response-info">
+						
+					</div>
+					<div class="response">
+						<p class="detail"><?php echo $avejana_review->Reply; ?></p>
+					</div>
+				</div>
+			</div>
+			<?php } ?>
+			<br />
+			<hr />
+			<br />
+		</div>
+		<?php
+		endforeach; 
+		endforeach; 
+		?>
+	</div>
+	<?php endif;?>
+	<a name="review2-form"></a>
+	<div class="review-forms">
+		<?php echo $this->getLayout()->createBlock('reviewandqa/form')->setBlockId('product.review.form')->toHtml() ?>
+	</div>
+</div>
+
+<script type="text/javascript">
+	//<![CDATA[
+	$('review-form').hide();
+	$('add-review').observe('click', function(event){
+			$('review-form').toggle();
+		});
+		
+	var contactForm = new VarienForm('review-form', true);  
+
+	jQuery(document).ready(function () {
+			var nullField = false;
+			jQuery("#review-form :input").each(function(){
+					if(jQuery(this).val() == ''){
+						nullField = true;
+					}
+				});
+			jQuery('#review-form > .buttons-set > button').click(function(e) {
+					if(nullField == false){
+						jQuery(this).disabled = true;
+					}
+				});
+		});
+	//]]>
+</script>
