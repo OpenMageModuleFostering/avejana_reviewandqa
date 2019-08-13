@@ -6,7 +6,7 @@
 
 <div class="collateral-box">
 
-	<div class="head">
+	<div class="head" id="woopcomm">
 
 		<span class="quesansheading"><?php echo $this->__('Questions and Answers') ?></span>
 <?php echo $this->getPagerHtml(); ?>
@@ -38,7 +38,7 @@
 
 			?>
 
-			<div class="question-entry">
+			<!--<div class="question-entry">
 
 				<div class="entry-comment"><strong><?php echo $this->__('Q'); ?>: </strong><?php echo $this->htmlEscape($entry->getQuestion()); ?></div>
 
@@ -58,8 +58,33 @@
 
 				</p>
 
+			</div>--> 
+			
+			<div id="wpc-comm" class="wpc-comment  wpc_comment_level-1">
+				<div class="wpc-comment-right">
+					<div class="wpc-comment-text">
+						<strong>Q : &nbsp;</strong><?php echo $this->htmlEscape($entry->getQuestion()); ?>
+					</div>
+					<div class="wpc-comment-header">
+						<div class="wpc-comment-date">Posted On: <?php echo $this->formatDate($entry->getCreatedOn()); ?>,
+						</div>
+						<div class="wpc-comment-author"> 
+							By: <a href="javascript:void(0)"><?php echo $entry->getName(); ?></a>
+						</div>
+					</div>
+					<div class="wpc-comment-answer">
+						<div class="wpc-comment-author">
+							<i class="fa fa-comment"></i>&nbsp;<?php echo $answer['AnsweredBy']; ?>
+						</div>
+						<div class="wpc-que-ans">
+							<strong>A : </strong><?php echo $answer['Answer']; ?>
+						</div>
+					</div>
+				</div>
+				<div style="clear:both"></div>
+				<hr>
 			</div>
-
+			
 			<?php } ?>	        
 
 		<?php endforeach; ?>	        

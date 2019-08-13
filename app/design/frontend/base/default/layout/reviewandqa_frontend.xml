@@ -3,7 +3,13 @@
 	<catalog_product_view>
 	
 		<reference name="head">
-			<action method="addCss"><stylesheet>css/reviewandqa.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/reviewandqa/reviewandqa.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/reviewandqa/style.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/reviewandqa/jquery.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/reviewandqa/widget-custom.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/reviewandqa/avejana_style.css</stylesheet></action>
+			<action method="addItem"><type>skin_js</type><name>js/star-rating.js</name></action>
+
 		</reference>
 		
 		<reference name="product.info">

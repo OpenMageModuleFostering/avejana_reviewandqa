@@ -1,0 +1,581 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+/*
+ *
+ *   INSPINIA - Responsive Admin Theme
+ *   version 2.4
+ *
+*/
+
+.avejana-content.text-box {
+  padding-bottom: 0;
+  padding-top: 15px;
+}
+#Awejana_review_form{display: none;}
+.avejaqna-super-main {
+  clear: both;
+  margin-bottom: 25px;
+  margin-top: 0;
+  padding: 0;
+}
+p.stars{
+	display:none;
+}
+.reviews-count-left {
+   
+    padding-right: 0 !important;
+    line-height: 22px;
+}
+input.radio {
+    display: none;
+}
+.avj-page.preview-paging .select-page-count {
+	width: 65px;
+}
+#woopcomm .avj-page.preview-paging .select-page-count {
+	width: 65px;
+}
+#woopcomm .avj-page.preview-paging{
+	float: left;
+    width: 12%;
+}
+#woopcomm .avj-page.preview-paging > span {
+    float: left;
+    margin-left: -25px;
+}
+.wpc-comment-left {
+    margin-bottom: 35px !important;
+}
+.select-cmmnt-count {
+    width: auto;
+}
+#woopcomm .wpc-comment-left {
+    margin-top: 4px !important;
+}
+#woopcomm .wpc-comment-answer .wpc-comment-author{
+	color : #65bd40 !important;
+}
+#wpc_review_form .comment-form-author, #wpc_review_form .comment-form-email {
+    width: 75% ;
+}
+.avj-page.preview-paging {
+	float: right !important;
+	width: 44% ;
+}
+
+#Awejana_review_form {
+    display: none;
+    padding-top: 10px;
+}
+.response {
+    margin-top: -5px;
+}
+#woopcomm .wpc-comment .wpc-comment-right, #woopcomm .wpc-reply .wpc-comment-right{
+	border: none !important;
+}
+.Avejana-review-star {
+    clear: both;
+    text-align: center;
+}
+.wpc-comment-answer {
+    background-color: #f5f5f5;
+    border-left: 5px solid #cccccc;
+    margin: 15px 0 0 35px;
+    padding: 10px;
+}
+.avejana-responce {
+    background-color: #f5f5f5;
+    border-left: 5px solid #cccccc;
+    padding: 10px;
+}
+.avejana-content {
+  background-color: #ffffff;
+  color: inherit;
+  padding: 15px 20px 20px 20px;
+  border-color: #e7eaec;
+  border-image: none;
+  border-style: solid solid none;
+  border-width: 1px 0;
+}
+.awejana-product-list-review .rating-xs {
+    font-size: 14px !important;
+}
+.text-muted {
+  color: #888888;
+}
+.star-rating{
+	display: none !important;
+} 
+.more-link {
+		display: block;
+}
+.more-content span{
+	display: none}
+.incr-page
+{
+	margin-left: 0 !important;
+}
+.incr-page li
+{
+	list-style: none;
+	float: left;
+}
+.incr-page > li > a
+{	
+	border: 1px solid #888888;
+	border-radius: 4px;
+	color: #888888;
+	padding: 7px 11px;
+}
+.incr-page > li > a:hover{
+	background-color: #888888;
+	color: #fff;}
+.avejana-initial a, .text-muted, .text-muted:hover{
+	text-decoration:none !important;
+}
+.avejana-review-feld {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+@media (max-width: 992px) {
+  .chat-users,
+  .chat-statistic {
+    margin-left: 0;
+  }
+}
+.chat-view .avejana-content {
+  padding: 0;
+}
+.chat-message {
+  padding: 10px 20px;
+}
+.message-avatar {
+  height: 48px;
+  width: 48px;
+  border: 1px solid #e7eaec;
+  border-radius: 4px;
+  margin-top: 1px;
+}
+.chat-discussion .chat-message.left .message-avatar {
+  float: left;
+  margin-right: 10px;
+}
+.chat-discussion .chat-message.right .message-avatar {
+  float: right;
+  margin-left: 10px;
+}
+.message {
+  background-color: #fff;
+  border: 1px solid #e7eaec;
+  text-align: left;
+  display: block;
+  padding: 10px 20px;
+  position: relative;
+  border-radius: 4px;
+}
+.chat-discussion .chat-message.left .message-date {
+  float: right;
+}
+.chat-discussion .chat-message.right .message-date {
+  float: left;
+}
+.chat-discussion .chat-message.left .message {
+  text-align: left;
+  margin-left: 55px;
+}
+.chat-discussion .chat-message.right .message {
+  text-align: right;
+  margin-right: 55px;
+}
+.message-date {
+  font-size: 10px;
+  color: #888888;
+}
+.message-content {
+  display: block;
+}
+.chat-discussion {
+  background: #eee;
+  padding: 15px;
+  height: 400px;
+  overflow-y: auto;
+}
+.chat-users {
+  overflow-y: auto;
+  height: 400px;
+}
+.chat-message-form .form-group {
+  margin-bottom: 0;
+}
+/* CLIENTS */
+.clients-list {
+  margin-top: 20px;
+}
+.clients-list .tab-pane {
+  position: relative;
+  height: 600px;
+}
+.client-detail {
+  position: relative;
+  height: 620px;
+}
+.clients-list table tr td {
+  height: 46px;
+  vertical-align: middle;
+  border: none;
+}
+.client-link {
+  font-weight: 600;
+  color: inherit;
+}
+.client-link:hover {
+  color: inherit;
+}
+.client-avatar {
+  width: 42px;
+}
+.client-avatar img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+.contact-type {
+  width: 20px;
+  color: #c1c3c4;
+}
+.client-status {
+  text-align: left;
+}
+.client-detail .vertical-timeline-content p {
+  margin: 0;
+}
+.client-detail .vertical-timeline-icon.gray-bg {
+  color: #a7aaab;
+}
+.clients-list .nav-tabs > li.active > a,
+.clients-list .nav-tabs > li.active > a:hover,
+.clients-list .nav-tabs > li.active > a:focus {
+  border-bottom: 1px solid #fff;
+}
+/* Social feed */
+.avejana-review-feld .avejana-feed {
+  margin-left: 62px;
+  border: none;
+}
+.avejana-review-feld .avejana-initial {
+  float: left;
+  padding: 0;
+}
+.avejana-review-feld .avejana-initial img {
+  width: 52px;
+  height: 52px;
+  border: 1px solid #e7eaec;
+}
+.avejana-review-feld .avejana-feed .avejana-initial {
+  padding:  0;
+  float: none;
+}
+.avejana-feed {
+  border: 1px solid #e7eaec;
+  background: #fff;
+  margin-bottom: 15px;
+}
+.article .avejana-feed {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+.article .avejana-feed:last-child {
+  margin-bottom: 0;
+  border-bottom: 1px solid #e7eaec;
+}
+.article .avejana-feed p {
+  font-size: 13px;
+  line-height: 18px;
+}
+.avejana-initial {
+  padding: 15px 15px 0 15px;
+}
+.social-comment .social-comment {
+  margin-left: 45px;
+}
+.avejana-initial img {
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+}
+.avejana-initial .media-body a {
+  font-size: 14px;
+  display: block;
+}
+.avejana-tweet {
+  padding: 5px 0;
+  padding-bottom: : 0;
+}
+.avejana-tweet img {
+  margin-bottom: 10px;
+}
+svg
+{fill: #808080; cursor: pointer;}
+svg:hover,svg:focus,svg:active
+{fill:#FFD700;}
+.woocommerce-tabs.wc-tabs-wrapper .tabs.wc-tabs
+{
+	width:100% !important;
+}
+.woocommerce-tabs.wc-tabs-wrapper #tab-wpc_review_tab.woocommerce-Tabs-panel.woocommerce-Tabs-panel--wpc_review_tab.panel.entry-content.wc-tab
+{
+	width:100% !important;
+}
+.caption
+{
+	display:none !important;
+}
+.rating-loading {
+    width: 25px;
+    height: 25px;
+    font-size: 0;
+    color: #fff;
+    background: transparent url('../img/loading.gif') top left no-repeat;
+    border: none;
+}
+.rating-container .rating {
+    cursor: default;
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.rating-container .star {
+    display: inline-block;
+    margin: 0 3px;
+    text-align: center;
+}
+.rating-container .empty-stars {
+    color: #aaa;
+}
+.rating-container .filled-stars {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: auto;
+    color: #FFD700;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.rating-rtl {
+    float: right;
+}
+.rating-animate .filled-stars {
+    transition: width 0.25s ease;
+    -o-transition: width 0.25s ease;
+    -moz-transition: width 0.25s ease;
+    -webkit-transition: width 0.25s ease;
+}
+.rating-rtl .filled-stars {
+    left: auto;
+    right: 0;
+    -moz-transform: matrix(-1, 0, 0, 1, 0, 0) translate3d(0, 0, 0);
+    -webkit-transform: matrix(-1, 0, 0, 1, 0, 0) translate3d(0, 0, 0);
+    -o-transform: matrix(-1, 0, 0, 1, 0, 0) translate3d(0, 0, 0);
+    transform: matrix(-1, 0, 0, 1, 0, 0) translate3d(0, 0, 0);
+}
+.rating-rtl.is-star .filled-stars {
+    right: 0.06em;
+}
+.rating-rtl.is-heart .empty-stars {
+    margin-right: 0.07em;
+}
+.rating-xs {
+    font-size: 20px;
+    
+}
+.center.tech {
+    margin: 0 auto;
+   
+}
+.avj-bottom .tech {
+	width:26%;
+}
+.avj-top .tech {
+	width:16%;
+}
+.review-title  a {
+    color: #e8ad1e !important;
+}
+.clear-rating 
+{
+	display: none !important;
+}
+.pull-right .rating-xs{
+	float: right;	
+}
+.wpc-comment-logo a {
+    color: #b4d186;
+    display: inline-flex;
+    vertical-align: bottom;
+}
+.rating-container .clear-rating {
+    color: #aaa;
+    cursor: not-allowed;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 60%;
+}
+.clear-rating-active {
+    cursor: pointer !important;
+}
+.clear-rating-active:hover {
+    color: #843534;
+}
+.rating-container .clear-rating {
+    padding-right: 5px;
+}
+.reviews-count-left .rating-xs {
+    font-size: 20px;
+    padding-left: 5px;
+}
+.rating-container .caption {
+    color: #999;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 60%;
+    margin-top: -0.6em;
+}
+.rating-container .caption {
+    margin-left: 5px;
+    margin-right: 0;
+}
+.rating-rtl .caption {
+    margin-right: 5px;
+    margin-left: 0;
+}
+.woocommerce-product-rating {
+    display: none !important;
+}
+.avejana-small-star .rating-xs{
+  font-size : 16px ;
+  margin-top: 7px;
+  margin-bottom:  7px;
+}
+/*.Awejana-QA-summery{
+    padding-top: 1px;
+}*/
+#woopcomm .wpc-field-name{
+	width : 50%;
+}
+#woopcomm .wpc-field-email{
+		width : 50%;
+	}
+.awejana-product-details-review .rating-xs{
+  font-size : 16px !important;
+}
+.avejana-container{
+  padding: 0px !important;
+}
+@media print {
+    .rating-container .clear-rating {
+        display: none;
+    }
+}
+@media only screen and (max-width:760px){
+	
+  .awejana-product-details-review .rating-xs{
+    font-size : 12px !important;
+  }
+  .avejana-small-star
+	{
+		float: left !important;
+		width:100% !important;
+	}
+	#avejana-widget-gallery
+	{
+			width: 90% ; font-family: 'Helvetica';margin: 0 auto;
+	}
+	.name-date
+	{
+		font-size:12px;
+	}
+	.avejana-five-star
+	{
+		margin: 10px auto;
+	}
+	.big-star
+	{
+		margin-top: 7px;
+	}
+  .rating-xs {
+      font-size: 16px;
+  }
+  .avejana-small-star .rating-xs{
+    font-size : 14px ;
+  }
+}
+@media only screen and (max-width:360px){
+	.wpc-comment-answer{
+		margin:15px 0 0 0;
+	}
+	#woopcomm .wpc-field-name{
+		width : 100%;
+	}
+	#woopcomm .wpc-field-email{
+		width : 100%;
+	}
+	.aveJana-item input, .aveJana-item textarea{
+		width : 100%;
+	}
+	#woopcomm .wpc-comment-author{
+		clear: both;
+	}
+	.avj-top .tech{
+		width : auto;
+	}
+	.woocommerce div.product .woocommerce-tabs .panel, .woocommerce-page div.product .woocommerce-tabs .panel{
+		 width: 100% !important;
+	}
+	.avj-page.preview-paging > span {
+		float: left;
+	}
+	#wpc_review_form .comment-form-author, #wpc_review_form .comment-form-email {
+		width: 100% ;
+	}
+	#woopcomm .wpc-field-comment textarea{
+		width: 100% ;
+	}
+	#woopcomm .avj-page.preview-paging > span {
+		margin-left: 0;
+	}	.pull-left.btn.btn-primary{		 margin: 5px auto 0;	}	.top-section .pull-left{		float: none !important;	}	.top-section .pull-right{		float: none !important;	}
+}
+@media only screen and (min-width:760px){
+	.avejana-feed
+	{
+		border: none; margin-right: 15px
+	}
+	#avejana-widget-gallery
+	{
+			width: 93% ; font-family: 'Helvetica';margin: 0 auto;
+	}
+	.woocommerce-tabs.wc-tabs-wrapper #tab-wpc_comment_tab.woocommerce-Tabs-panel.woocommerce-Tabs-panel--wpc_comment_tab.panel.entry-content.wc-tab
+	{
+		width:100% !important;
+	}
+}
+@media (min-width:760px) and (max-width:991px){
+	.big-star
+	{
+		width:100% !important;
+		margin:15px auto;
+	}
+	.ipad-btn
+	{
+		width:100% !important;
+	}
+}
+@media only screen and (min-width:991px){
+	.big-star span.reviews strong
+{
+	vertical-align: top;
+    line-height: 35px;
+    margin-right: 20px;
+}
+}

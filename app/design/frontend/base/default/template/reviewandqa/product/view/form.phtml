@@ -1,17 +1,201 @@
 <?php
-
+?>
+<style>
+    .more-link {display: block}
+    .more-content span{display: none}
+    .pagination.incr-page > li > a
+{	
+border: 1px solid #3B5998;
+border-radius: 4px;
+color: #3B5998;
+}
+.pagination.incr-page > li > a:hover{background-color: #3b5998;color: #fff;}
+</style>
+<?php 
+$url = Mage::getBaseUrl();
+$id = $this->getProductInfo()->getId();
 ?>
 <div class="form-add">
 	<h2><?php echo $this->__('Write Your Own Review') ?></h2>
 	<?php if($this->getAllowWriteReviewFlag()): ?>
-	<form action="<?php echo $this->getAction() ?>" method="post" id="review-form">
-		<?php echo $this->getBlockHtml('formkey'); ?>
-		<?php echo $this->getChildHtml('form_fields_before')?>
-		<h3><?php echo $this->__("You're reviewing:"); ?>
-			<span><?php echo $this->escapeHtml($this->getProductInfo()->getName()) ?></span>
-		</h3>
-
-		<div class="fieldset">
+	
+	<div id="Awejana_review_form" >
+							<div class="col-lg-12 col-md-12 col-xs-12">
+								<div class="" style="margin-bottom:20px!important;">
+									<div class="avejana-content" style="background-color:#f5f5f5; border-radius: 14px; position: relative; z-index: 9;">
+										<div class="row">
+											<div class="col-lg-12">
+											
+												<form action="<?php echo $url."reviewandqa/reviews/post/" ?>" method="post" id="wpc_review_form" class="wpc_comm_form wpc_main_form  wpc-no-comments has-validation-callback form-horizontal" enctype="multipart/form-data" >
+												<input type="hidden" id="id" name="id" value="<?php echo $id; ?>" />
+												<?php echo $this->getBlockHtml('formkey'); ?>
+												<?php echo $this->getChildHtml('form_fields_before')?>
+													<div class="col-lg-12">
+																<!--<div class="comment-notes">Required fields are marked <span class="required"></span></div>-->
+																
+																<div class="form-group comment-form-rating">
+																	<label class="col-sm-3 control-label">Your Rating <span class="required"></span></label>
+																	<div class="col-sm-9 comment-form-rating">
+																	
+																			<div id="write_review_rate" class="avejana-container" style="width: 180px;">
+																				<div class="avejana-star">
+																					<div class="avejana-sub-star avejana-five-star">
+																						<input type="text" name="rating" id="rating" class="rating rating-loading" value="" data-size="xs" title="" >
+																						<?php foreach($this->getRatings() as $_rating): ?>
+																						<?php foreach($_rating->getOptions() as $_option): ?>
+																						<input type="radio" name="ratings[<?php echo $_rating->getId() ?>]" id="Rating_<?php echo $_option->getValue() ?>" value="<?php echo $_option->getId() ?>" class="radio" />
+																						<?php endforeach; ?>
+																						<?php endforeach; ?>
+																					</div>
+													  
+																				</div>
+																			</div>
+																	</div>
+																</div>
+																
+																<div class="form-group">
+																	<label class="col-sm-3 control-label">Title <span class="required"></span></label>
+																	<div class="col-sm-9">
+																		<input id="cmnt_title" maxlength="100" name="title" size="30" class="form-control" aria-required="true" required="" type="text">
+																	</div>
+																</div>
+																
+																<?php //if (!is_user_logged_in()) { ?>
+																	
+																	<div class="form-group">
+																		<label class="col-sm-3 control-label">Name<span class="required"></span></label>
+																		<div class="col-sm-9 comment-form-author">
+																			<input id="author" class="form-control" name="nickname" size="30" aria-required="true" required="" type="text">
+																		</div>
+																	</div>
+																	
+																	<div class="form-group">
+																		<label class="col-sm-3 control-label">Email<span class="required"></span></label>
+																		<div class="col-sm-9 comment-form-email">
+																			<input id="email" class="form-control" name="email" size="30" aria-required="true" required="" type="email">
+																		</div>
+																	</div>
+																	
+																<?php //} ?>
+																
+																<div class="form-group">
+																		<label class="col-sm-3 control-label">Description <span class="required"></span></label>
+																		<div class="col-sm-9 comment-form-comment">
+																			<textarea  style="height:100px; width:100%;" id="comment" name="detail" cols="45" rows="8" aria-required="true" required=""></textarea>
+																		</div>
+																	</div>
+																
+																<div class="form-group">
+																	<div class="col-sm-8">
+																		<input class="btn pull-right wpc_review_submit" style="background-color: #888888 !important;color:#fff;font-weight: normal;font-size: 12px;" name="submit" id="submit"  value="Submit" type="submit"> 
+																		<input name="comment_post_ID" value="<?php echo $post->ID; ?>" id="review_post_ID" type="hidden">
+																		<input name="comment_parent" id="review_parent" value="0" type="hidden">
+																	</div>
+																</div>
+													</div>			
+												</form>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+   
+           
+                
+            </div>
+      
+<!-- Mainly scripts -->
+<!--<script src="Wigets_files/jquery-2.js"></script>
+<script src="Wigets_files/bootstrap.js"></script>-->
+<!--<script src="Wigets_files/jquery_003.js"></script>-->
+<!--<script src="Wigets_files/jquery_002.js"></script>-->
+<!-- Custom and plugin javascript -->
+<!--<script src="Wigets_files/inspinia.js"></script>-->
+<!--<script src="Wigets_files/common.js"></script>-->
+<!--<script src="Wigets_files/bootstrap2-toggle.js"></script>-->
+<!--<script src="Wigets_files/bootstrap-colorpicker.js"></script>-->
+<!--<script src="Wigets_files/ion.js"></script>-->
+<!--<script src="Wigets_files/jquery.js"></script>-->
+<!--<script>
+    $('#avg_rate').rateYo({
+        rating: 4.3333333333333,
+        starWidth: '35px',
+        readOnly: true,
+        ratedFill: '#3b5998',
+    });
+    $('.display_rate').each(function() {
+        $(this).rateYo({
+            rating: $(this).attr('data-rating'),
+            starWidth: '26px',
+            readOnly: true,
+            ratedFill: '#3b5998',
+        });
+    });
+    var showChar = 250;
+    var ellipsesText = '...';
+    var moreText = 'Read more';
+    var lessText = 'less';
+    $('.more').each(function() {
+        var content = $(this).html();
+        if(content.length > showChar) {
+            var c = content.substr(0, showChar);
+            var h = content.substr(showChar, content.length - showChar);
+            var html = c + '<span class="more-eclipses">' + ellipsesText + '</span><span class="more-content"><span>'
+                + h + '</span><a class="more-link">' + moreText + '</a></span>';
+            $(this).html(html);
+        }
+    });
+    $('.more-link').click(function() {
+        if($(this).hasClass('less')) {
+            $(this).removeClass('less');
+            $(this).html(moreText);
+        } else {
+            $(this).addClass('less');
+            $(this).html(lessText);
+        }
+        $(this).parent().prev().toggle();
+        $(this).prev().toggle();
+        return false;
+    });
+    $('#write_review_btn').click(function() {
+        $('#write_review_box').toggle('show');
+    });
+    $('#write_review_rate').rateYo({
+        fullStar: true,
+        spacing: '5px',
+        multiColor: {
+            "startColor": "#FF0000",
+            "endColor": "#00FF00"
+        }
+    });
+    $('#review_form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'post',
+            url: location.protocol + "//" + location.hostname + '/widgets/submit-review',
+            data: {
+                'username': $('#reviewer_name').val(),
+                'email': $('#reviewer_email').val(),
+                'product_id': 'PW-01',
+                'title': $('#review_title').val(),
+                'ratings': $("#write_review_rate").rateYo('rating'),
+                'description': $('#review_description').val()
+            },
+            success: function(data) {
+                $('#msg').html(data);
+                $('#reviewer_name').val('');
+                $('#reviewer_email').val('');
+                $('#review_title').val('');
+                $("#write_review_rate").rateYo(0);
+                $('#review_description').val('');
+            }
+        });
+    });
+</script>-->
+		<!-- End of Review form -->
+		<!-- <div class="fieldset">
 			<?php if( $this->getRatings() && $this->getRatings()->getSize()): ?>
 			<h4><?php echo $this->__('How do you rate this product?') ?> <em class="required">*</em></h4>
 			<span id="input-message-box"></span>
@@ -103,9 +287,9 @@
 		</div>
 		<div class="buttons-set">
 			<button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Submit Review')) ?>" class="button"><span><span><?php echo $this->__('Submit Review') ?></span></span></button>
-		</div>
-	</form>
-	<script type="text/javascript">
+		</div> -->
+	
+	<!-- <script type="text/javascript">
 		//<![CDATA[
 		var dataForm = new VarienForm('review-form');
 		Validation.addAllThese(
@@ -114,18 +298,18 @@
 						var trs = $('product-review-table').select('tr');
 						var inputs;
 						var error = 1;
-
+	
 						for( var j=0; j < trs.length; j++ ) {
 							var tr = trs[j];
 							if( j > 0 ) {
 								inputs = tr.select('input');
-
+	
 								for( i in inputs ) {
 									if( inputs[i].checked == true ) {
 										error = 0;
 									}
 								}
-
+	
 								if( error == 1 ) {
 									return false;
 								} else {
@@ -143,5 +327,4 @@
 	<p class="review-nologged" id="review-form">
 		<?php echo $this->__('Only registered users can write reviews. Please, <a href="%s">log in</a> or <a href="%s">register</a>', $this->getLoginLink(), Mage::helper('customer')->getRegisterUrl()) ?>
 	</p>
-	<?php endif ?>
-</div>
+	<?php endif ?> -->

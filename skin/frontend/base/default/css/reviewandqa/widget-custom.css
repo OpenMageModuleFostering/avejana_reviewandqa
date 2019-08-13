@@ -1,0 +1,87 @@
+@charset "utf-8";
+/* CSS Document */
+
+#widget{ width:655px; margin:0 auto; font-family: 'Verdana'}
+.top-section{ }
+
+@media only screen and (min-width: 320px) and (max-width: 359px) {
+.ibox-content{ padding:15px 10px !important;}
+#widget{ width:100% !important; display:block !important;} 
+.social-feed-separated .social-feed-box{ margin-left:45px !important;}
+.social-avatar div.pull-right{ width: 100% !important; position:inherit !important; margin-top:5px !important; margin-bottom:10px !important;}
+.social-feed-box{ margin-right:0px !important;}
+.social-feed-separated .social-feed-box .social-avatar{ padding:15px 0px 0px 10px !important;}
+.social-avatar a span{ font-size:32px !important;}
+#write_review_btn{ margin-bottom:10px !important;}
+}
+
+
+@media only screen and (min-width: 360px) and (max-width: 374px) {
+.ibox-content{ padding:15px 10px !important;}
+#widget{ width:100% !important; display:block !important;} 
+.social-feed-separated .social-feed-box{ margin-left:45px !important;}
+.social-avatar div.pull-right{ width: 100% !important; position:inherit !important; margin-top:5px !important; margin-bottom:10px !important;}
+.social-feed-box{ margin-right:0px !important;}
+.social-feed-separated .social-feed-box .social-avatar{ padding:15px 0px 0px 10px !important;}
+.social-avatar a span{ font-size:32px !important;}
+#write_review_btn{ margin-bottom:10px !important;}
+}
+
+
+@media only screen and (min-width: 375px) and (max-width: 413px) {
+.ibox-content{ padding:15px 10px !important;}
+#widget{ width:100% !important; display:block !important;} 
+.social-feed-separated .social-feed-box{ margin-left:45px !important;}
+.social-avatar div.pull-right{ width: 100% !important; position:inherit !important; margin-top:5px !important; margin-bottom:10px !important;}
+.social-feed-box{ margin-right:0px !important;}
+.social-feed-separated .social-feed-box .social-avatar{ padding:15px 0px 0px 10px !important;}
+.social-avatar a span{ font-size:32px !important;}
+#write_review_btn{ margin-bottom:10px !important;}
+}
+
+
+@media only screen and (min-width: 414px) and (max-width: 479px) {
+.ibox-content{ padding:15px 10px !important;}
+#widget{ width:100% !important; display:block !important;} 
+.social-feed-separated .social-feed-box{ margin-left:45px !important;}
+.social-avatar div.pull-right{ width: 100% !important; position:inherit !important; margin-top:5px !important; margin-bottom:10px !important;}
+.social-feed-box{ margin-right:0px !important;}
+.social-feed-separated .social-feed-box .social-avatar{ padding:15px 0px 0px 10px !important;}
+.social-avatar a span{ font-size:32px !important;}
+#write_review_btn{ margin-bottom:10px !important;}
+}
+
+
+
+@media only screen and (min-width: 480px) and (max-width: 639px) {
+.ibox-content{ padding:15px 10px !important;}
+#widget{ width:100% !important; display:block !important;} 
+.social-feed-separated .social-feed-box{ margin-left:45px !important;}
+.social-avatar div.pull-right{ width: 100% !important; position:inherit !important; margin-top:5px !important; margin-bottom:10px !important;}
+.social-feed-box{ margin-right:0px !important;}
+.social-feed-separated .social-feed-box .social-avatar{ padding:15px 0px 0px 10px !important;}
+.social-avatar a span{ font-size:32px !important;}
+#write_review_btn{ margin-bottom:10px !important;}
+}
+
+@media only screen and (min-width: 640px) and (max-width: 767px) {
+.ibox-content{ padding:15px 10px !important;}
+#widget{ width:100% !important; display:block !important;} 
+.social-feed-separated .social-feed-box{ margin-left:45px !important;}
+.social-avatar div.pull-right{ }
+.social-feed-box{ margin-right:0px !important;}
+.social-feed-separated .social-feed-box .social-avatar{ padding:15px 0px 0px 10px !important;}
+.social-avatar a span{ font-size:32px !important;}
+#write_review_btn{ margin-bottom:10px !important;}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 980px) {
+.ibox-content{ padding:15px 10px !important;}
+#widget{ width:655px !important; display:block !important; margin:0 auto !important;} 
+.social-feed-separated .social-feed-box{ margin-left:45px !important;}
+.social-avatar div.pull-right{ }
+.social-feed-box{ margin-right:0px !important;}
+.social-feed-separated .social-feed-box .social-avatar{ padding:15px 0px 0px 10px !important;}
+.social-avatar a span{ font-size:32px !important;}
+#write_review_btn{ margin-bottom:10px !important;}
+}
