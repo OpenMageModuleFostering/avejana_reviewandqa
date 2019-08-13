@@ -28,9 +28,13 @@ class Avejana_AvejanaRMS_Block_Helper extends Mage_Review_Block_Helper
 
     public function getRatingSummary()
     {
+		$avgratingandcount =array();
 		$_product 	= 	Mage::registry('current_product');
-		$ratingandcountarr		=	Mage::helper('avejanarms')->averageRating($_product->getId());
-		return $ratingandcountarr;
+		$product		=	Mage::getModel('catalog/product')->load($_product->getId());
+		$avgratingandcount['reviewcount'] = $product->getAvejanaTotalreview();
+		$avgratingandcount['avgrating'] = $product->getAvejanaAveragerating();
+		
+		return $avgratingandcount;
     }
 
     public function getAvejanaReviewsCount()

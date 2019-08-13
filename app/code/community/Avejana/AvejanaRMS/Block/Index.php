@@ -2,10 +2,12 @@
 class Avejana_AvejanaRMS_Block_Index extends Mage_Core_Block_Template{   
 
 
-	public function getAvejanaReviesListing($productid)
-	{
+	public function getAvejanaReviesListing($productid){
+	
 			$url = Mage::helper('avejanarms')->getCompanyUrl().'/api/reviewreply/';	
-
+			$store_id = Mage::app()->getStore()->getStoreId();
+			$action = Mage::getModel('catalog/resource_product_action');
+			$returnarr =array();
 
 			$data = array(
 
@@ -35,15 +37,36 @@ class Avejana_AvejanaRMS_Block_Index extends Mage_Core_Block_Template{
 			if($response){
 				$status = $response->status;
 
-				if($status == 'success'){
-
-					return $response->message;
-
+				if($response->status=='success'){
+					$totalreviewcount=count($response->message);
+					$totalratings=0;
+					foreach($response->message as $reviews){
+						$totalratings=$totalratings+$reviews->Ratings;
+					}
+					$averagerating=($totalratings/$totalreviewcount)*20;
+					$returnarr['avgrating']		=	$averagerating;
+					$returnarr['reviewcount']	=	$totalreviewcount;
+					$returnarr['reviews']	=	$response->message;
+					
+					
+					$action->updateAttributes(array($productid), array(
+						'avejana_averagerating' => $averagerating
+					), $store_id);
+					
+					$action->updateAttributes(array($productid), array(
+						'avejana_totalreview' => $totalreviewcount
+					), $store_id);
+					
+					return $returnarr;
 				}else{
-
-					//$this->session->addError('');
-					//Mage::getSingleton('catalog/session')->addError('fail to open replies on reviews');
-
+					$action->updateAttributes(array($productid), array(
+						'avejana_averagerating' => 0
+					), $store_id);
+					
+					$action->updateAttributes(array($productid), array(
+						'avejana_totalreview' => 0
+					), $store_id);
+					$returnarr = array(); 
 				}
 			}
 	}
@@ -52,6 +75,8 @@ class Avejana_AvejanaRMS_Block_Index extends Mage_Core_Block_Template{
 	public function getAvejanaQuestionAnswerListing($productid)
 	{
 			$url = Mage::helper('avejanarms')->getCompanyUrl().'/api/answer/';	
+			$store_id = Mage::app()->getStore()->getStoreId();
+			$action = Mage::getModel('catalog/resource_product_action');
 
 			//echo $productid;die;
 
@@ -84,10 +109,22 @@ class Avejana_AvejanaRMS_Block_Index extends Mage_Core_Block_Template{
 
 				if($status == 'success'){
 
+					
+					$i=0; foreach($response->message as $_qa){
+						if($_qa->Answer != ''){ 
+							$i=$i+1;
+						}
+					}
+					
+					$action->updateAttributes(array($productid), array(
+						'avejana_totalqa' => $i
+					), $store_id);
 					return $response->message;
 
 				}else{
-
+					$action->updateAttributes(array($productid), array(
+						'avejana_totalqa' => 0
+					), $store_id);
 					//Mage::getSingleton('catalog/session')->addError('fail to open replies of Questions');
 
 				}

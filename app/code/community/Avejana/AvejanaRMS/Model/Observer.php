@@ -11,9 +11,12 @@ class Avejana_AvejanaRMS_Model_Observer{
 			
 			$url 				= 	Mage::helper('avejanarms')->getCompanyUrl().'/api/get_company_url';
 			$sectiondata 		= 	Mage::app()->getRequest()->getParams();
+			//echo '<pre>';print_r($sectiondata);die;
 			$is_module_active	=	$sectiondata['groups']['avejanaconfiguration']['fields']['active']['value'];
 			$companyid			=	$sectiondata['groups']['avejanaconfiguration']['fields']['companyid']['value'];
 			$avejanakey			=	$sectiondata['groups']['avejanaconfiguration']['fields']['avejanakey']['value'];
+			$islogoshow			=	$sectiondata['groups']['avejanaconfiguration']['fields']['isshowlogo']['value'];
+			$isrichsnippet		=	$sectiondata['groups']['avejanaconfiguration']['fields']['showrichsnippet']['value'];
 			
 			if($is_module_active==1){
 
@@ -27,19 +30,40 @@ class Avejana_AvejanaRMS_Model_Observer{
 				$writeConnection->query($query);
 				
 			}
+		
+			$is_logo_show			=	Mage::helper('avejanarms')->getLogoShow();
+			$is_rich_snippet_show	=	Mage::helper('avejanarms')->getRichSnippet();
+			
+			if($is_logo_show==1){
+				Mage::getConfig()->saveConfig('avejanasetting/avejanaconfiguration/isshowlogo', 1, 'default', 0);
+			}elseif($is_logo_show==0  && ($islogoshow==1)){
+				Mage::getConfig()->saveConfig('avejanasetting/avejanaconfiguration/isshowlogo', 0, 'default', 0);
+				Mage::getSingleton('adminhtml/session')->addError(Mage::helper('avejanarms')->__('Please enable logo API from Avejana Daashboard'));
+			}
+		
+			if($is_rich_snippet_show==1){
+				Mage::getConfig()->saveConfig('avejanasetting/avejanaconfiguration/showrichsnippet', 1, 'default', 0);
+			}elseif($is_rich_snippet_show==0 && ($isrichsnippet==1)){
+				Mage::getConfig()->saveConfig('avejanasetting/avejanaconfiguration/showrichsnippet', 0, 'default', 0);
+				Mage::getSingleton('adminhtml/session')->addError(Mage::helper('avejanarms')->__('Please enable Rich Snippet API from Avejana Daashboard'));
+			}
+			
 			
 			$userurl=$this->getCompanyUrl($url, $companyid, $avejanakey);
 			
 			Mage::getConfig()->saveConfig('avejanasetting/avejanaconfiguration/companyurl', $userurl, 'default', 0);
-			
-			$this->exportProductCron(); /****export all product to avejana*****/
+			if($is_module_active==0){
+				$this->exportProductCron(); /****export all product to avejana*****/
+			}
 	}
 	
-
+	
+	
 	public function exportProductCron(){			
 	
 		$productModel =  Mage::getModel('catalog/product')->getCollection()->addAttributeToFilter('avejana_product_import',0);
 		$productData = $productModel->getData();
+		//echo '<pre>';print_r($productData);die;
 		foreach($productData as $product){
 			$product_id = $product['entity_id'];
 			$product_model = Mage::getModel('catalog/product')->load($product_id);
@@ -331,6 +355,18 @@ class Avejana_AvejanaRMS_Model_Observer{
 	}
 
 	
+	/******
+	
+	Disable product attribute after save
+	
+	*****/
+	public function lockAttributes($observer) {
+		$event = $observer->getEvent();
+		$product = $event->getProduct();
+		$product->lockAttribute('avejana_averagerating');
+		$product->lockAttribute('avejana_totalreview');
+		$product->lockAttribute('avejana_totalqa');
+	}
 	
 
 	/**
@@ -545,7 +581,7 @@ class Avejana_AvejanaRMS_Model_Observer{
 					}
 					
 				}
-				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('avejanarms')->__('Incorrect Company ID and/or AveJana Key'));
+				//Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('avejanarms')->__('Incorrect Company ID and/or AveJana Key'));
 				Mage::getSingleton('adminhtml/session')->addError(Mage::helper('avejanarms')->__('Incorrect Company ID and/or AveJana Key'));
 			}catch(Exception $e){
 				print_r($e);

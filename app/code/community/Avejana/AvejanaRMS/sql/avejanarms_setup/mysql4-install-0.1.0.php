@@ -16,7 +16,8 @@ CREATE TABLE {$this->getTable('avejana')} (
   PRIMARY KEY (`avejana_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-    ");
+  
+   ");
 //demo 
 //Mage::getModel('core/url_rewrite')->setId(null);
 //demo 
@@ -34,20 +35,21 @@ $installer1->addAttribute('catalog_product', 'avejana_product_import', array(
 		'label'                   => 'Avejana Product Imported',
 		'source'                  => 'eav/entity_attribute_source_boolean',
 		'global'                  => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
-		'visible'                 => 1,
+		'visible'                 => 0,
 		'required'                => 0,
 		'visible_on_front'        => 0,
 		'is_html_allowed_on_front'=> 0,
 		'is_configurable'         => 0,
 		'searchable'              => 0,
-		'filterable'              => 1,
+		'filterable'              => 0,
 		'comparable'              => 0,
 		'unique'                  => false,
 		'user_defined'            => false,
 		'default'                 => 0,
 		'is_user_defined'         => false,
-		'used_in_product_listing' => true
+		'used_in_product_listing' => false
 	));
+
 
 $installer1->endSetup();
 

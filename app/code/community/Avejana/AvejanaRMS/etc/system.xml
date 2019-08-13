@@ -70,11 +70,29 @@
                             <show_in_store>1</show_in_store>
 							<comment>Automatically Generated URL</comment>
                           </companyurl>
+						   <showrichsnippet translate="label">
+                            	<label>Enable Rich Snippet</label>
+                            	<frontend_type>select</frontend_type>
+                            	<source_model>adminhtml/system_config_source_yesno</source_model>
+                            	<sort_order>4</sort_order>
+                            	<show_in_default>1</show_in_default>
+                            	<show_in_website>1</show_in_website>
+                            	<show_in_store>1</show_in_store>
+                           </showrichsnippet>
+						   <isshowlogo translate="label">
+                            	<label>Show Avejana Logo</label>
+                            	<frontend_type>select</frontend_type>
+                            	<source_model>adminhtml/system_config_source_yesno</source_model>
+                            	<sort_order>5</sort_order>
+                            	<show_in_default>1</show_in_default>
+                            	<show_in_website>1</show_in_website>
+                            	<show_in_store>1</show_in_store>
+                           </isshowlogo>
                           <logoposition translate="label">
                             <label>Avejana Logo Position in Review Tab</label>
                             <frontend_type>select</frontend_type>
                             <source_model>avejanarms/system_config_source_Diyoptions14924550424</source_model>
-                            <sort_order>4</sort_order>
+                            <sort_order>6</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -84,7 +102,7 @@
                             	<label>If Default Tab is not active on website then Enable custom Tabs</label>
                             	<frontend_type>select</frontend_type>
                             	<source_model>adminhtml/system_config_source_yesno</source_model>
-                            	<sort_order>5</sort_order>
+                            	<sort_order>7</sort_order>
                             	<show_in_default>1</show_in_default>
                             	<show_in_website>1</show_in_website>
                             	<show_in_store>1</show_in_store>
@@ -93,7 +111,7 @@
                            	   <label>Upload Sales Data in Avejana</label>
 							   <frontend_type>button</frontend_type>
 							   <frontend_model>avejanarms/uploadbutton</frontend_model>
-							   <sort_order>20</sort_order>
+							   <sort_order>8</sort_order>
 							   <show_in_default>1</show_in_default>
 							   <show_in_website>1</show_in_website>
 							   <show_in_store>1</show_in_store>

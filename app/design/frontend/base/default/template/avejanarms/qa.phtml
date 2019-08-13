@@ -52,7 +52,7 @@
     </div>
 </form>
 </div>
-	<div class="collateral-box" id="product-q-a">
+	<div id="product-q-a">
 		<?php 
 	if(count($avejanaQAlist)>0){
 		$i=0; foreach($avejanaQAlist as $_qa){
@@ -93,10 +93,23 @@
 		} 
 		if($i>0){?>
 		<script>
-			$j(document).ready(function(){
-				$j(".toggle-tabs li").each(function(index) {
-					 if($j(this).find("span").text() == "Q&A"){
-						 $j(this).find("span").html("Q&A "+" (<?php echo $i;?>)");
+			
+			jQuery(document).ready(function(){
+				jQuery(".toggle-tabs li").each(function(index) {
+					 if(jQuery(this).find("span").text() == "Q&A"){
+						 jQuery(this).find("span").html("Q&A "+" (<?php echo $i;?>)");
+					 }
+				});
+				
+				jQuery(".product-tabs li").each(function(index) {
+					 if(jQuery(this).find("a").text() == "Q&A"){
+						 jQuery(this).find("a").html("Q&A "+" (<?php echo $i;?>)");
+					 }
+				});
+				
+				jQuery(".avejana-tab-links li").each(function(index) {
+					 if(jQuery(this).find("span").text() == "Q&A"){
+						 jQuery(this).find("span").html("Q&A "+" (<?php echo $i;?>)");
 					 }
 				});
 			})
@@ -106,6 +119,7 @@
 	</div>
 <script type="text/javascript">
 //<![CDATA[
+	
     var ravejanaeview = new VarienForm('avejanaqa', true);
 //]]>
 	jQuery('.qaformarea').css("display","none");

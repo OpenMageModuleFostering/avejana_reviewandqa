@@ -2,10 +2,10 @@
 $customtabenable 		= 		Mage::getStoreConfig('avejanasetting/avejanaconfiguration/customtab');
 $avejanamodule 			= 		Mage::getStoreConfig('avejanasetting/avejanaconfiguration/active');
 if(($customtabenable==1) && ($avejanamodule==1)){  //check if custom tab is enabled ?>
-<div class="avejana-tabs">
+<div id="avejana-tabs" class="avejana-tabs">
     <ul class="avejana-tab-links">
-        <li class="active"><a href="#avejana-tab1">Reviews</a></li>
-        <li><a href="#avejana-tab2">Q&amp;A</a></li>
+        <li class="custab reviewclick first active"><span href="#avejana-tab1">Reviews</span></li>
+        <li class="custab qaclick"><span href="#avejana-tab2">Q&amp;A</span></li>
     </ul>
 
     <div class="avejana-avejana-tab-content">
@@ -22,7 +22,7 @@ if(($customtabenable==1) && ($avejanamodule==1)){  //check if custom tab is enab
 
 <script>
 	jQuery(document).ready(function() {
-		jQuery('.avejana-tabs .avejana-tab-links a').on('click', function(e)  {
+		jQuery('.avejana-tabs .avejana-tab-links span').on('click', function(e)  {
 			var currentAttrValue = jQuery(this).attr('href');
 
 			// Show/Hide avejana-tabs
@@ -33,6 +33,24 @@ if(($customtabenable==1) && ($avejanamodule==1)){  //check if custom tab is enab
 
 			e.preventDefault();
 		});
+		
+		jQuery(document).on('click',".qaformopen", function(event){
+			jQuery(".qaclick span").click();
+			
+			jQuery('html, body').animate({
+					scrollTop: jQuery(".avejana-tabs").offset().top-100
+			}, 1000);
+		});
+		
+		jQuery(document).on('click',".reviewformopen", function(event){
+		
+			jQuery(".reviewclick span").click();
+			jQuery('html, body').animate({
+					scrollTop: jQuery(".avejana-tabs").offset().top-100
+			}, 1000);
+		
+  	 });
+	
 	});
 </script>
 

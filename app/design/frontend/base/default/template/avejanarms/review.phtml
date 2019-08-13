@@ -2,13 +2,19 @@
 <?php 
 		$moduledir=Mage::getModuleDir('controllers', 'Avejana_AvejanaRMS');
 		include_once($moduledir.'/PageLister-1.2.php');
-
+		$avgrating 			=	0;
+		$totalreview 		=	0;
 		$current_product 	= 	Mage::registry('current_product');
 		$avejanareviewes	= 	$this->getAvejanaReviesListing($current_product->getId());
+		if($avejanareviewes){
+			$avgrating 		= $avejanareviewes['avgrating'];
+			$totalreview 	= $avejanareviewes['reviewcount'];
+			$avejanareviewes= $avejanareviewes['reviews'];
+		}
 		
-		$pageviews			=	Mage::helper('avejanarms')->getPageView($current_product->getId());
-		$is_logo_show			=	Mage::helper('avejanarms')->getLogoShow();
-		$is_rich_snippet_show	=	Mage::helper('avejanarms')->getRichSnippet();
+		$pageviews				=	Mage::helper('avejanarms')->getPageView($current_product->getId());
+		$is_logo_show			=	Mage::getStoreConfig('avejanasetting/avejanaconfiguration/isshowlogo');
+		$is_rich_snippet_show	=	Mage::getStoreConfig('avejanasetting/avejanaconfiguration/showrichsnippet');
 		//echo $userurl	=	Mage::helper('avejanarms')->getUsersnurl();
 		
 		if($is_rich_snippet_show==1){
@@ -26,7 +32,7 @@
 	
 	<?php if($is_logo_show==1){?>
 		<div class="avejana-review-reply aveja-logo-holder <?php echo $showlogo_position; ?>">
-			<div class="avejana_link" ><a target="_blank" href="https://avejana.com/">Powered By</a></div><div class="awejana-logo" ><a target="_blank" href="https://avejana.com/"><img src="<?php echo $reivew_logo_url; ?>" height="21px" alt="" class="avejana-logo"></a></div>
+			<div class="avejana_link" ><a target="_blank" href="https://avejana.com/"><?php echo Mage::helper('avejanarms')->__('Powered By');?></a></div><div class="awejana-logo" ><a target="_blank" href="https://avejana.com/"><img src="<?php echo $reivew_logo_url; ?>" height="21px" alt="" class="avejana-logo"></a></div>
 		</div>
 	<?php } ?>
 	<div class="avejana_review_section">
@@ -34,29 +40,26 @@
 			<a class="review_form_display" href="javascript:void(0)"><?php echo Mage::helper('avejanarms')->__('Write a Review') ?></a>
 
 			<?php 
-				  $averageratingandcount		=	Mage::helper('avejanarms')->averageRating($current_product->getId());
-					if (!empty($averageratingandcount)){
-						if($averageratingandcount['reviewcount']>0){
+				  if($totalreview>0){
 			?>
-							<div class="pull-right"> 
-								<span class="review-total"><strong style="line-height: 30px;"><?php echo $averageratingandcount['reviewcount'];?> review(s)</strong></span>
+					<div class="pull-right"> 
+						<span class="review-total"><strong style="line-height: 30px;"><?php echo $totalreview.' '.Mage::helper('avejanarms')->__('review(s)');?></strong></span>
 
-								 <div class="stars star-ratings-sprite">
-									 <span style="width:<?php echo $averageratingandcount['avgrating']; ?>%" class="star-ratings-sprite-rating"></span>
-								 </div>
-							</div>
+						 <div class="stars star-ratings-sprite">
+							 <span style="width:<?php echo $avgrating; ?>%" class="star-ratings-sprite-rating"></span>
+						 </div>
+					</div>
 
-			<?php 	} 
-					}?>
+			<?php 	}?>
 
 		</div>
 	<div class="avejanareviewform avejana-content">
-		<form action="<?php echo $this->getUrl('avejanarms/index/reviewpost'); ?>" id="ravejanaeview" method="post" class="scaffold-form">
+		<form action="<?php echo $this->getUrl('avejanarms/index/reviewpost'); ?>" id="av_ravejanaeview" method="post" class="scaffold-form">
 			<div class="fieldarea">
 				<input type="hidden" name="product_id" value="<?php echo $current_product->getId();?>"/> 
 				<ul class="av-form-list">
 					<li class="avratings">
-						<label for="name" class="required ratingli"><em>*</em><?php echo Mage::helper('avejanarms')->__('Your Rating') ?></label>
+						<label for="name" class="required ratingli lilabel"><em>*</em><?php echo Mage::helper('avejanarms')->__('Your Rating') ?></label>
 
 							<span class="starRating">
 								<input id="rating5" type="radio" name="rating" value="5">
@@ -208,9 +211,9 @@
 	</div>
 </div>
 <script type="text/javascript">
-//<![CDATA[
-    var ravejanaeview = new VarienForm('ravejanaeview', true);
-//]]>
+
+   var av_ravejanaeview = new VarienForm('av_ravejanaeview', true);
+	jQuery(this).scrollTop(0);
 	jQuery('.avejanareviewform').css("display","none");
 	jQuery( ".review_form_display" ).click(function() {
 	   jQuery('.avejanareviewform').toggle();

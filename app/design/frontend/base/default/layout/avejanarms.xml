@@ -34,13 +34,13 @@
 		<reference name="product.info.tabs">
 		 	<action method="addTab" ifconfig="avejanasetting/avejanaconfiguration/active" translate="title" module="avejanarms">
 				<alias>avejanareview</alias>
-				<title>Avejana Reviews</title>
+				<title>Reviews</title>
 				<block>avejanarms/index</block>
 				<template>avejanarms/review.phtml</template>
 			</action>
 			<action method="addTab" ifconfig="avejanasetting/avejanaconfiguration/active" translate="title" module="avejanarms">
 				<alias>avajanaqa</alias>
-				<title>Avejana Q&amp;A</title>
+				<title>Q&amp;A</title>
 				<block>avejanarms/index</block>
 				<template>avejanarms/qa.phtml</template>
 			</action>

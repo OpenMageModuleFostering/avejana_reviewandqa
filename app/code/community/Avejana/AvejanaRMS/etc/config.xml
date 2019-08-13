@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Avejana_AvejanaRMS>
-      <version>0.1.0</version>
+      <version>1.0.0</version>
     </Avejana_AvejanaRMS>
   </modules>
   <frontend>
@@ -137,6 +137,16 @@
                     </mymodule>
                 </observers>
             </admin_system_config_changed_section_avejanasetting>
+		  
+		  <catalog_product_load_after>
+				<observers>
+					<disable_product_attribute_after_load>
+						<type>singleton</type>
+						<class>Avejana_AvejanaRMS_Model_Observer</class>
+						<method>lockAttributes</method>
+					</disable_product_attribute_after_load>
+				</observers>
+			</catalog_product_load_after>
 	  </events>
   </global>    
 	<frontend>

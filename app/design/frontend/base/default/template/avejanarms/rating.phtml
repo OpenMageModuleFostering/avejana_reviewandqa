@@ -1,75 +1,107 @@
 <?php 
 $avejanamodule 		= 		Mage::getStoreConfig('avejanasetting/avejanaconfiguration/active');
-if($avejanamodule==1){  //check if module is enabled
-	$current_product 	=  Mage::registry('current_product');
-	$cpBlock 		= 		$this->getLayout()->getBlockSingleton('Avejana_AvejanaRMS_Block_Index');
-	$QAlisting	=		$cpBlock->getAvejanaQuestionAnswerListing($current_product->getId());
-	$qa			=	0;
-	if(count($QAlisting)>0){
-		 foreach($QAlisting as $_qa){
-				if($_qa->Answer != ''){ 
-					$qa=$qa+1;
-				}
-		}
-	}
+if($avejanamodule==1){  		//check if module is enabled
+	$current_product 	=  		Mage::registry('current_product');
+	$reviewcount		=		$current_product->getAvejanaTotalreview();
+	$avgrating			=		$current_product->getAvejanaAveragerating();
+	$qa					=		$current_product->getAvejanaTotalqa();;
 
-	$avgratingandcount	=    	$this->getRatingSummary();
-	if (!empty($avgratingandcount)){
-		if($avgratingandcount['reviewcount']>0){?>
+	if($reviewcount>0){?>
 
 	<script>
-		$j(document).ready(function(){
+		
+		jQuery(document).ready(function(){
 			
-			$j(".toggle-tabs li").each(function(index) {
-				 if($j(this).find("span").text() == "Reviews"){
-					 $j(this).find("span").html("Reviews "+" (<?php echo $avgratingandcount['reviewcount'];?>)");
+			jQuery(".toggle-tabs li").each(function(index) {
+				 if(jQuery(this).find("span").text() == "Reviews"){
+					 jQuery(this).find("span").html("Reviews "+" (<?php echo $reviewcount;?>)");
+				 }
+			});
+			
+			jQuery(".product-tabs li").each(function(index) {
+				 if(jQuery(this).find("a").text() == "Reviews"){
+					 jQuery(this).find("a").html("Reviews "+" (<?php echo $reviewcount;?>)");
+				 }
+			});
+			
+			jQuery(".avejana-tab-links li").each(function(index) {
+				 if(jQuery(this).find("span").text() == "Reviews"){
+					 jQuery(this).find("span").html("Reviews "+" (<?php echo $reviewcount;?>)");
 				 }
 			});
 		})
 	</script>
-	<div class="ratings">
+	<div class="avratings">
 
-		<div class="stars star-ratings-sprite"><span style="width:<?php echo $avgratingandcount['avgrating'] ?>%" class="star-ratings-sprite-rating"></span></div>
+		<div class="stars star-ratings-sprite"><span style="width:<?php echo $avgrating ?>%" class="star-ratings-sprite-rating"></span></div>
 		<p class="rating-links">
-			<a href="#review-form" class="reviewformopen" id="review-form"><?php echo $this->__('%d Review(s)', $avgratingandcount['reviewcount'])?></a>
+			<a href="#review-form" class="reviewformopen" id="review-form"><?php echo $this->__('%d Review(s)', $reviewcount)?></a>
 			
 			<span class="separator">|</span>
-			<a href="#question-form" class="qaformopen" id="question-form"><?php if($qa>0){echo "Q&A($qa)";}else{ echo 'Ask a Question';} ?></a>
+			<a href="#question-form" class="qaformopen" id="question-form"><?php if($qa>0){echo "Q&A($qa)";}else{ echo $this->__('Ask a Question');} ?></a>
 		</p>
 	</div>
 	<?php 
-		} 
+		
 	}else{?>
 		<p class="no-rating">
 			<a href="#review-form" class="reviewformopen" id="review-form"><?php echo $this->__('Be the first to review this product') ?></a>
 			<span class="separator">|</span>
-			<a href="#question-form" class="qaformopen" id="question-form"><?php if($qa>0){echo "Q&A($qa)";}else{ echo 'Ask a Question';}  ?></a>
+			<a href="#question-form" class="qaformopen" id="question-form"><?php if($qa>0){echo "Q&A($qa)";}else{ echo $this->__('Ask a Question');}  ?></a>
 		</p>
 	<?php } ?>
 
 
 <script type="text/javascript">
         //<![CDATA[
-	$j(document).on('click',".reviewformopen", function(event){
-		$j(".collateral-tabs .tab-container").removeClass("current");
-		$j('#review-tab-open').closest('dd').addClass("current"); 
-		$j('.toggle-tabs li').removeClass("current");
-		$j(".toggle-tabs li:contains('Reviews')").addClass("current");
-		$j('html, body').animate({
-				scrollTop: $j(".collateral-tabs").offset().top-100
-		}, 1000);
+	
+	jQuery(document).on('click',".reviewformopen", function(event){
+		jQuery(".collateral-tabs .tab-container").removeClass("current");
+		jQuery('#review-tab-open').closest('dd').addClass("current"); 
+		jQuery('.toggle-tabs li').removeClass("current");
+		jQuery(".toggle-tabs li:contains('Reviews')").addClass("current");
+		if(jQuery('.collateral-tabs').length){
+			jQuery('html, body').animate({
+					scrollTop: jQuery(".collateral-tabs").offset().top-100
+			}, 1000);
+		}
   	 });
 	
-	$j(document).on('click',".qaformopen", function(event){
-		$j(".collateral-tabs .tab-container").removeClass("current");
-		$j('#qa-tab-open').closest('dd').addClass("current"); 
-		$j('.toggle-tabs li').removeClass("current");
-		$j(".toggle-tabs li:contains('Q&A')").addClass("current");
-		$j('html, body').animate({
-				scrollTop: $j(".collateral-tabs").offset().top-100
-		}, 1000);
+	jQuery(document).on('click',".qaformopen", function(event){
+		jQuery(".collateral-tabs .tab-container").removeClass("current");
+		jQuery('#qa-tab-open').closest('dd').addClass("current"); 
+		jQuery('.toggle-tabs li').removeClass("current");
+		jQuery(".toggle-tabs li:contains('Q&A')").addClass("current");
+		if(jQuery('.collateral-tabs').length){
+			jQuery('html, body').animate({
+					scrollTop: jQuery(".collateral-tabs").offset().top-100
+			}, 1000);
+		}
   	 });
 	
+	jQuery(document).on('click',".reviewformopen", function(event){
+		jQuery(".product-tabs-content").css("display","none");
+		jQuery('.product-collateral .product-tabs li').removeClass("active");
+		jQuery('#product_tabs_avejanareview').addClass("active");
+		jQuery("#product_tabs_avejanareview_contents").css("display","block");
+		if(jQuery('.product-collateral').length){
+			jQuery('html, body').animate({
+					scrollTop: jQuery(".product-collateral").offset().top-100
+			}, 1000);
+		}
+  	 });
+	
+	jQuery(document).on('click',".qaformopen", function(event){
+		jQuery(".product-tabs-content").css("display","none");
+		jQuery('.product-collateral .product-tabs li').removeClass("active");
+		jQuery('#product_tabs_avajanaqa').addClass("active");
+		jQuery("#product_tabs_avajanaqa_contents").css("display","block");
+		if(jQuery('.product-collateral').length){
+			jQuery('html, body').animate({
+					scrollTop: jQuery(".product-collateral").offset().top-100
+			}, 1000);
+		}
+  	 });
 	
 	
   	

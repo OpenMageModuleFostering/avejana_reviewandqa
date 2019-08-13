@@ -463,13 +463,11 @@ $_specialPriceStoreLabel = $this->getProductAttribute('special_price')->getStore
 <?php endif; /* if (!$_product->isGrouped()): */ //echo 
 	$avejanamodule 		= 		Mage::getStoreConfig('avejanasetting/avejanaconfiguration/active');
 	if($avejanamodule==1){  //check if module is enabled
-	
-		$reviewandrating = Mage::helper('avejanarms')->averageRating($_id);
-
-		if (!empty($reviewandrating)){
-			if($reviewandrating['reviewcount']>0){?>
-				<div class="stars star-ratings-sprite"><span style="width:<?php echo $reviewandrating['avgrating'] ?>%" class="star-ratings-sprite-rating"></span></div>
-				<p class="totalreviews"><?php echo $reviewandrating['reviewcount'] ?> Review<?php if($reviewandrating['reviewcount']>1){?>(s)<?php } ?></p>
+		$reviewcount	=	$_product->getAvejanaTotalreview();
+		$avgrating		=	$_product->getAvejanaAveragerating();
+		if($reviewcount>0){?>
+				<div class="stars star-ratings-sprite"><span style="width:<?php echo $avgrating ?>%" class="star-ratings-sprite-rating"></span></div>
+				<p class="totalreviews"><?php echo $reviewcount ?> Review<?php if($reviewcount>1){?>(s)<?php } ?></p>
 		<?php }
-		}
+		
 	}?>
