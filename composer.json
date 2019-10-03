@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Avejana_ReviewAndQA",
+    "name": "OpenMageModuleFostering\/Avejana_ReviewAndQA",
     "type": "magento-module",
     "license": "OSL-v3.0",
     "homepage": "",
     "description": "aveJana Reviews and Q&A",
     "authors": [
-    {
-        "name": "aveJanaReviews",
-        "email": "amit.sharma@avejana.com"
-    }
-],
+        {
+            "name": "aveJanaReviews",
+            "email": "amit.sharma@avejana.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
