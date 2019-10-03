@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/Avejana_ReviewAndQA",
+    "name": "openmage-module-fostering\/avejana_reviewandqa",
     "type": "magento-module",
-    "license": "OSL-v3.0",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "aveJana Reviews and Q&A",
     "authors": [
